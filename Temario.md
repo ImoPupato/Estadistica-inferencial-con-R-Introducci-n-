@@ -1,4 +1,4 @@
-## ●	Módulo 1: Introducción a estadística descriptiva.   
+## ●	Módulo 1: Introducción a estadística inferencial.   
 Funciones de distribución, distribuciones en el muestreo (binomial, poisson, normal, exponencial).  
 Simulación de datos.  
 Aleatoriedad de datos (box.test).  
