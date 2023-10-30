@@ -71,6 +71,15 @@ $f_X (x) = λ e^{-λx}$ si x>0
 $f_X (x) = 0$ si x≤0  
 Si X ∼ Exp(λ), se demuestra que su media es E(X) = 1/λ y su desvío estándar es D(X) = 1/λ.  
 ## Simulación de datos 
+Muchas veces nos puede resultar interesante generar una muestra de datos que tengan una distribución dada. Para ello contamos con las funciones *rpois, rnorm, rexp*.  
+### Muestra de datos con distribución de Poisson  
+El argumento de la distribución de Posisson es λ, utilizaremos un ejemplo para poder construir nuestra muestra aleatoria. *Una persona está interesada en utilizar unos dispositivos para construir circuitos especiales y por seguridad los reemplazar ́ıa ante la ocurrencia de una falla. Este usuario pretende que la mayor ́ıa de
+ellos fallen despu ́es de las 150 horas y realiza una consulta en la empresa especializada para ver si
+esto es razonable.
+Se supone que la distribuci ́on de la variable duraci ́on del dispositivo (o tiempo hasta la falla), Y, es
+Exponencial con α = 0, 002 fallas por hora.
+```R
 
+```
 ## Aleatoriedad de datos
 ## Estimación de parámetros: puntual y por intervalo de confianza
