@@ -5,7 +5,7 @@ Podemos dividir a la estadística en dos grandes grupos o ramas;
 - **estadística inferencial**, relacionada con la utilización de datos para la toma de decisiones.  
 ## Palabras claves   
 - Variable: cualquier característica que toma diferentes valores en las unidades elementales.
-- Experimento aleatorio: aquel que, a pesar de ser repetido reiteradas veces bajo iguales condiciones controladas, proporciona resultados diferentes no predecibles. Por ejemplo; "registrar el número obtenido al lanzar un dado".   
+- Experimento aleatorio: aquel que, a pesar de ser repetido reiteradas veces bajo iguales condiciones controladas, proporciona resultados diferentes no predecibles. Por ejemplo; "registrar el número obtenido al lanzar un dado". Se suele representar con la letro _**E**_.   
 - Espacio muestral: aquel conjunto formado por todos los resultados posibles asociados a un experimento aleatorio. Se suele representar con la letra _**S**_.
 - Variable aleatoria: es aquella función que asigna a cada elemento del espacio muestral un número real. Se suele representar con la letra _**X**_.  
 Podemos formalizar la relación entre _X_ y _S_ de la siguiente manera:
@@ -13,9 +13,7 @@ Podemos formalizar la relación entre _X_ y _S_ de la siguiente manera:
   𝑋 ∶ 𝑆 → ℝ
 </div>  
 
-De acuerdo a los valores posibles que puede tomar una variable aleatoria cuantitativa podemos clasificarla en:  
-   Continua: aquella que toma cualquier valor dentro de un intervalo.  
-   Discreta: valores aislados dentro de un intervalo.   
+De acuerdo a los valores posibles que puede tomar una variable aleatoria cuantitativa podemos clasificarla en **continua** (aquella que toma cualquier valor dentro de un intervalo); o **discreta** (valores aislados dentro de un intervalo).   
 - Estadísticas descriptivas:  
   - Medidas de localización o posición: permiten localizar al conjunto de datos de destintos puntos de vista.  
      - valor mínimo: menor valor observado entre los datos.  
@@ -46,25 +44,28 @@ intervalo ($x_1, x_2$) está dada por el valor de la integral de la función de 
 dicho intervalo. Formalmente la representamos como: $$P(x_1 ≤ X ≤ x_2) = \int_{x_1}^{x_2} {f_x(x)} \,{\rm d}x$$
 ### Función de distribución acumulada  
 Para una variable aleatoria X, tanto discreta como continua, la función de distribución acumulada $F_X$ se define como: $$F_X (x) = P(X ≤ x) ∀ x ∈ R$$  
+<div align="center">
+  
 | Función de distribución acumulada |Variable aleatoria continua        |Variable aleatoria discreta        |
 |:---------------------------------:|:---------------------------------:|:---------------------------------:|
 |$f_X (x)$                          | $\int_{-∞}^X{f_X(s)}ds$           |$$\sum_s^x p_X(s)\$$|
 
+</div>  
+
 ## Distribuciones en el muestreo  
 ### - Poisson
-La distribución Poisson es util para describir el comportamiento de un conjunto de eventos que suceden aleatoriamente en una unidad de tiempo o espacio. 
+La distribución Poisson es util para describir el comportamiento de un conjunto de eventos que suceden aleatoriamente en una unidad de tiempo o espacio.  
 Una **variable aleatoria discreta** X tiene una distribución Poisson con parámetro λ, y se simboliza Y ∼ Po(λ), si su función de probabilidad puntual es:  
 $p_X (x) = \frac{e^{−λ}λ^{x}}{x!}$ con y = 0, 1, 2, ...donde λ ≥ 0.  
 Si Y ∼ Po(λ), se demuestra que su media es E(X) = λ y su desvío estándar es D(X) = $\sqrtλ$.  
 ### - Normal  
-La distribución Normal, o Gaussiana, es muy utilizada puesto que la distribución de muchos de las estadísticas que
-se usan en los intervalos de confianza y ensayos de hipótesis se aproximan a esta.
+La distribución Normal, o Gaussiana, es muy utilizada puesto que la distribución de muchos de las estadísticas que se usan en los intervalos de confianza y ensayos de hipótesis se aproximan a esta.  
 Una **variable aleatoria continua** X tiene una distribución Normal de parámetros μ y σ, X ∼ N(μ;σ), si su función de densidad de probabilidad es:
 $$f_X (x) = \frac{1}{\sqrt(2πσ)}e^−\frac{(x−μ)^2}{2σ^2}$$
 con x ∈ R donde μ ∈ R y σ ∈ $R^+$.  
 Si X ∼ N(μ; σ), se demuestra que su media es E(X) = μ y su desvío estándar es D(X) = σ.
 ### - Exponencial
-Cuando se quiere modelar la duración de un suceso o el tiempo hasta que ocurra un evento, se recurre a la distribución exponencial.
+Cuando se quiere modelar la duración de un suceso o el tiempo hasta que ocurra un evento, se recurre a la distribución exponencial.  
 Una **variable aleatoria continua** X tiene una distribución Exponencial de parámetro λ, y se simboliza X ∼ Exp(λ), si su función de densidad de probabilidad es:  
 $f_X (x) = λ e^{-λx}$ si x>0
   y  
