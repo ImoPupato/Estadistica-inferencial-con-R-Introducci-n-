@@ -111,34 +111,175 @@ install.packages("tseries") # para instalar la librería en caso de que no la te
 ```
 ```{r, warning=FALSE}
 library ("tseries")
-aleatoria<-rnorm(50,0,1) # 50 datos, con μ=0 y σ=1
+```
+Generamos dos muestras para trabajar con el test:
+```{r, warning=FALSE}
+aleatoria<-rnorm(50,5,1.2) # 50 datos, con μ=5 y σ=1.2
 no_aleatoria<-rep(c(-1,1),50) # 50 datos cuyos valores alternan entre los valores -1 y 1
 ```
 Exploremos ambos conjuntos de datos con la función summary y observamos las características:
 ```{r, warning=FALSE}
 summary(aleatoria)
+```
+La salida va a ser levemente diferente ya que cada muestra generada por rnorm será diferente. En mi caso la salida es:
+```{r, warning=FALSE}
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
--2.9667 -0.6831 -0.1103 -0.2228  0.3791  1.3064 
+  2.435   3.897   4.763   4.835   5.686   8.055 
+```
+El summary de la muestra guardada en el objeto "no_aleatoria" será igual en todos los casos ya que lo hicimos a través de un vector:
+```{r, warning=FALSE}
 summary(no_aleatoria)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
      -1      -1       0       0       1       1
+```
+Además podemos pedir que se genere una tabla:
+```{r, warning=FALSE}
 table(no_aleatoria)
+```
+Cuya salida será:
+```{r, warning=FALSE}
 no_aleatoria
 -1  1 
 50 50 
 ```
 Podemos ver entonces que efectivamente el test de rachas en el conjunto de datos "no_aleatoria" debería darnos que no es aleatorio, es decir un p<0.05 y por lo tanto Rechazar la Hipótesis nula del test. Corramos entonces los dos test, recordando incluir la funcion factor(), condición requerida por el test:
 ```{r, warning=FALSE}
-runs.test(factor(sign((aleatoria)) # requiere un argumento más que es sign por la característica del dato
+runs.test(as.factor(aleatoria > median(aleatoria))) # por el tipo de datos, no dicotómicos, comparamos con la mediana
+```
+Las salida tiene la siguiente forma, recuerden que puede ser levemente diferente en función de los datos que se hayan generado:
+```{r, warning=FALSE}
+ runs.test(as.factor(aleatoria > median(aleatoria)))
+```
+```{r, warning=FALSE}
 	Runs Test
-data:  factor(sign(aleatoria)) 
-Standard Normal = 0.1336, p-value = 0.8937 # p>0.05, se acepta la Hipótesis nula por lo que consideramos aleatoriedad
-alternative hypothesis: two.sided
-runs.test(factor(no_aleatoria)
-	Runs Test
-data:  factor(no_aleatoria)
-Standard Normal = 9.8499, p-value < 2.2e-16 # p<0.05, se rechaza la Hipótesis nula por lo que consideramos aleatoriedad
+
+data:  as.factor(aleatoria > median(aleatoria))
+Standard Normal = 0.85732, p-value = 0.3913 # este es el valor que vamos a utilizar para la toma de decisiones
 alternative hypothesis: two.sided
 ```
-Las salida tipo de runs.test
+Como se puede observar, la prueba utilizada dio por *resultado* un p-value = 0.3913. El p-value puede interpretarse, a los fines de este curso, como la probabilidad de tomar la decisión equivocada rechazando la *Hipótesis nula* planteada por el test. En este caso la probabilidad de equivocarnos al rechazar la Hipótesis de que los datos provienen de un muestreo aleatorio es muy alta (recordemos que la probabilidad varía entre 0 y 1). Como criterio general podemos pensar que una p<0.05 es suficiente para considerar rechazar la Hipótesis nula, es decir aceptar que los datos no provienen de un muestreo aleatorio. En otras palabras, la probabilidad de equivocarnos al pensar que los datos no provienen de un muestreo aleatorio y que así sea es muy baja.  
+Ahora bien, corremos el test para la muestra "no_aleatoria":
+```{r, warning=FALSE}
+runs.test(as.factor(no_aleatoria > median(no_aleatoria)))
+```
+El resultado que tenemos en este caso es el siguiente:
+```{r, warning=FALSE}
+	Runs Test
+data:  as.factor(no_aleatoria > median(no_aleatoria))
+Standard Normal = 9.8499, p-value < 2.2e-16 # este es el valor que vamos a utilizar para la toma de decisiones
+alternative hypothesis: two.sided
+```
+En este caso p-value < 0.05, rechazamos la Hipótesis nula por lo que consideramos que el muestro no fue aleatorio.  
+
 ## Estimación de parámetros: puntual y por intervalo de confianza
+Los parámetros describen características poblacionales como el promedio poblacional, la variancia poblacional, el desvío poblacional y la probabilidad de que ocurra un evento o suceso en una población. Al referirse a la población, los parámetros suelen ser desconocidos y por ello es necesario estimar su valor. Para ello se recurre al muestreo, por ejemplo, y al cálculo de estadísticos que permiten estimar su valor ya sea de forma puntual o por intervalo de confianza.  
+La principal ventaja de una estimación por intervalo de confianza es que, justamente, se tiene una nivel de confianza de la estimación y un error asociado a la determinación.  
+<div align="center">
+  
+| Parámetro a estimar |Estimación puntual|Estimación por intervalo de confianza con σ conocido|Estimación por intervalo de confianza con σ desconocido|
+|:---------------------------------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
+|Promedio poblacional: μ | $\overline{x}$ | ($\overline{x}$ - $Z_{1-\frac{α}{2}}$ $\frac{σ}{\sqrt(n)}$ ; $\overline{x}$ + $Z_{1-\frac{α}{2}}\frac{σ}{\sqrt(n)}$) | ($\overline{x}$ - $t_{1-\frac{α}{2}}\frac{s}{\sqrt(n)}$ ; $(\overline{x}$ + $t_{n,1-\frac{α}{2}}\frac{s}{\sqrt(n)}$)|
+
+| Parámetro a estimar |Estimación puntual|Estimación por intervalo de confianza|
+|:---------------------------------:|:---------------------------------:|:---------------------------------:|
+|Variancia poblacional: $σ^2$ | $s^2$ | ($\frac{(n-1)s^2}{\chi^2_{n-1,1-\frac{α}{2}}}$ ; $\frac{(n-1)s^2}{\chi^2_{n-1,\frac{α}{2}}}$) |  
+
+| Parámetro a estimar |Estimación puntual|Estimación por intervalo de confianza|
+|:---------------------------------:|:---------------------------------:|:---------------------------------:|
+|Proporción: *p* | _h_ | (_h_ - $Z_{1-\frac{α}{2}}$ $\sqrt(\frac{h(1-h)}{n})$ ; _h_ + $Z_{1-\frac{α}{2}}$ $\sqrt(\frac{h(1-h)}{n})$ ) |
+</div>  
+Afortunadamente, contamos con funciones en R que nos permiten obtener los intervalos sin necesidad de utilizar las fórmulas descriptas anteriormente.  
+  
+Trabajaremos con el siguiente ejemplo para las determinaciones: _"Se determinó la concentración de Vitamina D (nga/ml) en 30 muestras de sangre, cuyos resultados se enuncian a continuación:"_   
+19.08, 16.38, 20.9, 19.09, 16.72, 22.84, 12.48, 21.57, 23.49, 17.15, 23.05, 14.73, 15.36, 16.3, 22.33, 26.7, 16.09, 11.88, 24.58, 12.37, 28.9, 15.3, 22.83, 19.86, 24.65, 17.94, 22.35, 27.6, 20.96, 12.49, 28.21, 18.5, 13.2  
+
+### Promedio
+Para estimar de manera puntual el promedio poblacional de concentración de Vitamina D en R, lo haremos a través de la media muestral. Primero creamos el objeto datos, con los valores de Vitamina D muestreados.
+```{r, warning=FALSE}
+mean(datos)
+[1] 19.57212 
+```
+Para poder realizar la estimación por intervalo de confianza, necesitamos recurrir a la función t.test (desconocemos la variancia poblacional) y definir el nivel de confianza (90%, en este caso).
+```{r, warning=FALSE}
+t.test(x=datos, conf.level=0.90)
+```
+La salida en R será la siguiente:	
+```{r, warning=FALSE}
+	One Sample t-test
+data:  datos
+t = 23.034, df = 32, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+90 percent confidence interval:
+ 18.13283 21.01141
+sample estimates:
+mean of x 
+ 19.57212  
+```
+Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (18.13; 21.01) mg/ml cubre al valor promedio de Vitamina D"_.  
+### Variancia
+Para estimar de manera puntual el la variancia poblacional de concentración de Vitamina D en R, lo haremos a través de la variancia muestral. Ya hemos creado el objeto datos, por lo que procederemos a la estimación.
+```{r, warning=FALSE}
+var(datos)
+[1] 23.82537
+```
+Para poder realizar la estimación por intervalo de confianza, necesitamos recurrir a la función varTest() del paquete "EnvStats" y definir el nivel de confianza (90%, en este caso).
+```{r, warning=FALSE}
+install.packages("EnvStats")
+library("EnvStats")
+varTest(x=datos, conf.level=0.90)
+```
+La salida en R será la siguiente, y se encuentra la estimación puntual y los valores de los extremos del intervalo (LCL y UCL):	
+```{r, warning=FALSE}
+Results of Hypothesis Test
+--------------------------
+
+Null Hypothesis:                 variance = 1
+
+Alternative Hypothesis:          True variance is not equal to 1
+
+Test Name:                       Chi-Squared Test on Variance
+
+Estimated Parameter(s):          variance = 23.82537
+
+Data:                            datos2
+
+Test Statistic:                  Chi-Squared = 762.4118
+
+Test Statistic Parameter:        df = 32
+
+P-value:                         0
+
+90% Confidence Interval:         LCL = 16.50447
+                                 UCL = 37.98401
+```
+Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (16.50; 37.98) m$g^2$ / \ml^2 cubre el valor de la variancia poblacional de la concentración de de Vitamina D, siendo su estimación puntual de 23.83 $\ng^2$/$\ml^2$"_.  
+
+### Proporción
+Supongan que ahora queremos determinar la proporción de personas con concentración de Vitamina D menor a la recomendada (mayor a 20 ng/ml).  
+Para poder realizar la estimación, con la frecuencia relativa primero debemos determinar cuántas muestras cumplen con el requisito. Para ello podemos utilizar la siguiente linea:
+```{r, warning=FALSE}
+sum(datos2<=20)
+[1] 18
+```
+Entonces para estimar de manera puntual la proporción tendriamos:
+```{r, warning=FALSE}
+18/33
+[1] 0.5454545
+```
+Para poder realizar la estimación por intervalo de confianza, necesitamos recurrir a la función prop.test() y definir el nivel de confianza (90%, en este caso).
+La salida en R será la siguiente, y se encuentra la estimación puntual y los valores de los extremos del intervalo:
+```{r, warning=FALSE}
+prop.test(18,33,conf.level = 0.9)
+
+	1-sample proportions test with continuity correction
+
+data:  18 out of 33, null probability 0.5
+X-squared = 0.12121, df = 1, p-value = 0.7277
+alternative hypothesis: true p is not equal to 0.5
+90 percent confidence interval:
+ 0.3906055 0.6927112
+sample estimates:
+        p 
+0.5454545 
+```
+Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (0.39; 0.69) cubre la proporción de personas que cumplen con la recomendación de Vitamina D, siendo su estimación puntual de 0.54"_. 
