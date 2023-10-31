@@ -111,9 +111,34 @@ install.packages("tseries") # para instalar la librería en caso de que no la te
 ```
 ```{r, warning=FALSE}
 library ("tseries")
-aleatoria<-rnorm(50,5,0.5) # 50 datos, con μ=5 y σ=0.5
+aleatoria<-rnorm(50,0,1) # 50 datos, con μ=0 y σ=1
 no_aleatoria<-rep(c(-1,1),50) # 50 datos cuyos valores alternan entre los valores -1 y 1
-runs.test(factor(aleatoria)
-runs.test(factor(no_aleatoria)
 ```
+Exploremos ambos conjuntos de datos con la función summary y observamos las características:
+```{r, warning=FALSE}
+summary(aleatoria)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-2.9667 -0.6831 -0.1103 -0.2228  0.3791  1.3064 
+summary(no_aleatoria)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     -1      -1       0       0       1       1
+table(no_aleatoria)
+no_aleatoria
+-1  1 
+50 50 
+```
+Podemos ver entonces que efectivamente el test de rachas en el conjunto de datos "no_aleatoria" debería darnos que no es aleatorio, es decir un p<0.05 y por lo tanto Rechazar la Hipótesis nula del test. Corramos entonces los dos test, recordando incluir la funcion factor(), condición requerida por el test:
+```{r, warning=FALSE}
+runs.test(factor(sign((aleatoria)) # requiere un argumento más que es sign por la característica del dato
+	Runs Test
+data:  factor(sign(aleatoria)) 
+Standard Normal = 0.1336, p-value = 0.8937 # p>0.05, se acepta la Hipótesis nula por lo que consideramos aleatoriedad
+alternative hypothesis: two.sided
+runs.test(factor(no_aleatoria)
+	Runs Test
+data:  factor(no_aleatoria)
+Standard Normal = 9.8499, p-value < 2.2e-16 # p<0.05, se rechaza la Hipótesis nula por lo que consideramos aleatoriedad
+alternative hypothesis: two.sided
+```
+Las salida tipo de runs.test
 ## Estimación de parámetros: puntual y por intervalo de confianza
