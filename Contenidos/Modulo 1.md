@@ -1,5 +1,5 @@
 # Módulo 1: Introducción a la estadística inferencial.  
-_La estadística ha sido propuesta como una tecnlogía del método científico, proporcionando instrumentos para la toma de decisiones (Mood & Graybill, 1963)_.  
+_La estadística ha sido propuesta como una tecnología del método científico, proporcionando instrumentos para la toma de decisiones (Mood & Graybill, 1963)_.  
 Podemos dividir a la estadística en dos grandes grupos o ramas;  
 - **estadística descriptiva**, abordada en el curso _"Introducción al procesamiento de datos con R"_. Relacionada con el resumen de datos, su descripción y presentación;
 - **estadística inferencial**, relacionada con la utilización de datos para la toma de decisiones.  
@@ -196,6 +196,7 @@ Trabajaremos con el siguiente ejemplo para las determinaciones: _"Se determinó 
 ### Promedio
 Para estimar de manera puntual el promedio poblacional de concentración de Vitamina D en R, lo haremos a través de la media muestral. Primero creamos el objeto datos, con los valores de Vitamina D muestreados.
 ```{r, warning=FALSE}
+datos<-c(19.08, 16.38, 20.9, 19.09, 16.72, 22.84, 12.48, 21.57, 23.49, 17.15, 23.05, 14.73, 15.36, 16.3, 22.33, 26.7, 16.09, 11.88, 24.58, 12.37, 28.9, 15.3, 22.83, 19.86, 24.65, 17.94, 22.35, 27.6, 20.96, 12.49, 28.21, 18.5, 13.2) # carga de datos
 mean(datos)
 [1] 19.57212 
 ```
@@ -252,11 +253,11 @@ P-value:                         0
 90% Confidence Interval:         LCL = 16.50447
                                  UCL = 37.98401
 ```
-Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (16.50; 37.98) m$g^2$ / \ml^2 cubre el valor de la variancia poblacional de la concentración de de Vitamina D, siendo su estimación puntual de 23.83 $\ng^2$/$\ml^2$"_.  
+Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (16.50; 37.98) mg^2/ml^2 cubre el valor de la variancia poblacional de la concentración de de Vitamina D, siendo su estimación puntual de 23.83 mg^2/ml^2"_.  
 
 ### Proporción
 Supongan que ahora queremos determinar la proporción de personas con concentración de Vitamina D menor a la recomendada (mayor a 20 ng/ml).  
-Para poder realizar la estimación, con la frecuencia relativa primero debemos determinar cuántas muestras cumplen con el requisito. Para ello podemos utilizar la siguiente linea:
+Para poder realizar la estimación, con la frecuencia relativa primero debemos determinar cuántas muestras no cumplen con el requisito. Para ello podemos utilizar la siguiente linea:
 ```{r, warning=FALSE}
 sum(datos2<=20)
 [1] 18
@@ -282,4 +283,4 @@ sample estimates:
         p 
 0.5454545 
 ```
-Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (0.39; 0.69) cubre la proporción de personas que cumplen con la recomendación de Vitamina D, siendo su estimación puntual de 0.54"_. 
+Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (39; 69) cubre la proporción de personas que no cumplen con la recomendación de Vitamina D, siendo su estimación puntual de 54%"_. 
