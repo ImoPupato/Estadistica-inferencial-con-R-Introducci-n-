@@ -80,14 +80,14 @@ Si X ∼ Exp(λ), se demuestra que su media es E(X) = 1/λ y su desvío estánda
 ## Simulación de datos 
 Muchas veces nos puede resultar interesante generar una muestra de datos que tengan una distribución dada. Para ello contamos con las funciones *rbinom, rpois, rnorm, rexp*.  
 ### Muestra de datos con distribución de Binomial  
-Se tiene el experimento aleatorio *"Lanzar una moneda 5 veces y registrar la salida"*. La moneda tiene *n*=2 salidas posibles de *k*=0.5. Si queremos simular un posible resultado, tendríamos 5 observaciones. En R podríamos hacerlo utilizando rbinom con los argumentos *n* = 5 (número de observaciones) , *size* = 1 (comienza en 0, tenemos dos opciones: cara o cruz -0 o 1-) y *prob* = 0.5 (probabilidad de ocurrencia del éxito) de la siguiente manera:
+Se tiene el experimento aleatorio *"Lanzar una moneda 5 veces y registrar la salida"*. La moneda tiene *n*=2 salidas posibles de *k*=0.5. Si queremos simular un posible resultado, tendríamos 5 observaciones. En R podríamos hacerlo utilizando rbinom con los argumentos *n* = 5 (número de observaciones) , *size* = 1 (corresponde a la probabilidad que estoy describiendo, en este caso da lo mismo poner 0 o 1 ya que son dos valores salidas equiprobables) y *prob* = 0.5 (probabilidad de ocurrencia del éxito) de la siguiente manera:
 ```r
 rbinom(5,1,0.5) # rbinom (n, size, prob)
 ```
 ### Muestra de datos con distribución de Poisson  
-Sabiendo que un 10% de los utensillos obtenidos en cierto proceso de fabricación resulta defectuoso y que nuestro nuevo E: *"Seleccionar al azar 5 utensillos"*, simulemos una posible muestra proveniente de dicho experimento. *rpois* tiene los argumentos *n* (igual a 5 en nuestro caso) y λ (igual a 10):
+Sabiendo que un 10% de los utensillos obtenidos en cierto proceso de fabricación resulta defectuoso y que nuestro nuevo E: *"Seleccionar al azar 5 utensillos"*, simulemos una posible muestra proveniente de dicho experimento. *rpois* tiene los argumentos *n* (igual a 5 en nuestro caso) y λ (igual a 0.1):
 ```r
-rpois(5,10) # rpois(n,λ)
+rpois(5,0.1) # rpois(n,λ)
 ```
 ### Muestra de datos con distribución de Normal  
 Los resultados en los exámenes finales del curso "Introducción al procesamiento de datos con R" fueron valores entre 0 y 10. La puntuación promedio fue 8.9 y su desviación estándar de 1.5. Suponiendo un nuevo E: *"Seleccionar al azar 5 exámenes y registrar su puntuación"*, simulemos una posible muestra proveniente de dicho experimento. *rnorm* tiene los argumentos *n* (igual a 5 en nuestro caso), μ (igual a 8.9 en nuestro caso) y σ (igual a 1.5 en nuestro caso):
@@ -190,7 +190,7 @@ La principal ventaja de una estimación por intervalo de confianza es que, justa
 </div>  
 Afortunadamente, contamos con funciones en R que nos permiten obtener los intervalos sin necesidad de utilizar las fórmulas descriptas anteriormente.  
   
-Trabajaremos con el siguiente ejemplo para las determinaciones: _"Se determinó la concentración de Vitamina D (nga/ml) en 30 muestras de sangre, cuyos resultados se enuncian a continuación:"_   
+Trabajaremos con el siguiente ejemplo para las determinaciones: _"Se determinó la concentración de Vitamina D (ng/ml) en 30 muestras de sangre, cuyos resultados se enuncian a continuación:"_   
 19.08, 16.38, 20.9, 19.09, 16.72, 22.84, 12.48, 21.57, 23.49, 17.15, 23.05, 14.73, 15.36, 16.3, 22.33, 26.7, 16.09, 11.88, 24.58, 12.37, 28.9, 15.3, 22.83, 19.86, 24.65, 17.94, 22.35, 27.6, 20.96, 12.49, 28.21, 18.5, 13.2  
 
 ### Promedio
@@ -216,7 +216,7 @@ sample estimates:
 mean of x 
  19.57212  
 ```
-Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (18.13; 21.01) mg/ml cubre al valor promedio de Vitamina D"_.  
+Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (18.13; 21.01) ng/ml cubre al valor promedio de Vitamina D"_.  
 ### Variancia
 Para estimar de manera puntual el la variancia poblacional de concentración de Vitamina D en R, lo haremos a través de la variancia muestral. Ya hemos creado el objeto datos, por lo que procederemos a la estimación.
 ```{r, warning=FALSE}
@@ -253,7 +253,7 @@ P-value:                         0
 90% Confidence Interval:         LCL = 16.50447
                                  UCL = 37.98401
 ```
-Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (16.50; 37.98) mg^2/ml^2 cubre el valor de la variancia poblacional de la concentración de de Vitamina D, siendo su estimación puntual de 23.83 mg^2/ml^2"_.  
+Podemos expresar nuestra conclusión como: _"Con un nivel de confianza del 90% el intervalo (16.50; 37.98)_ $mg^2$/ $ml^2$ _cubre el valor de la variancia poblacional de la concentración de de Vitamina D, siendo su estimación puntual de 23.83_ $mg^2$/ $ml^2$ ".  
 
 ### Proporción
 Supongan que ahora queremos determinar la proporción de personas con concentración de Vitamina D menor a la recomendada (mayor a 20 ng/ml).  
