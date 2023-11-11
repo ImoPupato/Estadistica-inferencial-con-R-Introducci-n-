@@ -259,8 +259,8 @@ sample estimates:
 0.4545455 
 ```
 7. Tomar un decisión y concluir en términos de la situación planteada: Como p = 0.999 es decir, p-value<𝛼, no rechazamos H0, aceptando H1. Por lo que podemos concluir:  
-*Bajo la evidencia muestral y con un nivel de significación del 5%, la proporción de personas con concentración de Vitamina D recomendada no es menor al 20%.*
-Como era de esperarse, la proporción es distinta al 20% y no es mayor; debía ser menor.
+*Bajo la evidencia muestral y con un nivel de significación del 5%, la proporción de personas con concentración de Vitamina D recomendada no es menor al 20%.*  
+Como era de esperarse, la proporción es distinta al 20% y es mayor; no podía ser menor.
 
 ## Ensayo de hipótesis para la variancia poblacional  
 1. En este caso de acuerdo a lo propuesto en el enunciado, podemos difinir la hipótesis nula como H0:  $σ^2$ = 0.6 $ng^2$ / $ml^2$;  
@@ -374,12 +374,12 @@ P-value:                         1
                                  UCL = 37.98401
 ```
 7. Tomar un decisión y concluir en términos de la situación planteada: Como p = 1 es decir, p-value>𝛼, aceptamos H0, rechazamos H1. Por lo que podemos concluir:  
-*Bajo la evidencia muestral y con un nivel de significación del 5%, la vaiabilidad en la concentración promedio de Vitamina D no es menor a 0.6* $ng^2$ / $ml^2$.
+*Bajo la evidencia muestral y con un nivel de significación del 5%, la vaiabilidad en la concentración promedio de Vitamina D no es menor a 0.6* $ng^2$ / $ml^2$.  
 Como era de esperarse, la variabilidad es distinta a 0.6 $ng^2$ / $ml^2$ y es mayor; por lo que no debía ser menor.
 
 ## Ensayo de hipótesis para el promedio poblacional cuando la estadística base que no cumple el criterio de normalidad   
 Proponemos el siguiente set de datos que fueron simulados para que no tengan una distribución normal:
-cc_vit_D2<-c(1.720675, 41.568301, 38.353545, 2.297701, 1.073103, 58.066633, 42.576757, 48.275281, 37.200148, 51.675629 111.510998, 54.515121, 6.432142, 88.462465, 3.249789 123.373373, 21.118178, 36.746506, 53.832461, 21.503287, 25.919496, 14.621059, 17.052441, 2.696813, 73.082098, 16.036116, 17.414659, 36.649046, 37.622159, 3.760085, 1.901215, 14.040065, 16.439864)  
+cc_vit_D2<-c(1.720675, 41.568301, 38.353545, 2.297701, 1.073103, 58.066633, 42.576757, 48.275281, 37.200148, 51.675629, 111.510998, 54.515121, 6.432142, 88.462465, 3.249789, 123.373373, 21.118178, 36.746506, 53.832461, 21.503287, 25.919496, 14.621059, 17.052441, 2.696813, 73.082098, 16.036116, 17.414659, 36.649046, 37.622159, 3.760085, 1.901215, 14.040065, 16.439864)  
 
 1. En este caso de acuerdo a lo propuesto en el enunciado, podemos difinir la hipótesis nula como H0: μ=22 ng/ml;  
 y la hipótesis alternativa será planteada en función de la *localización de los datos*. Con la intención de simplificar el análisis, vamos a decidir si el valor del parámetro (propuesto en H0) se encuentra dentro del rango de los datos observados en la muestra:
