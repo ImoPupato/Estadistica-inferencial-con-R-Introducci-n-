@@ -5,7 +5,7 @@ Aleatoriedad de datos (box.test).
 Estimación de parámetros: puntual y por intervalo de confianza (t.test) 
 ## ●	Módulo 2: Ensayos de hipótesis en base a una muestra.  
 Normalidad (shapiro.test)  
-Comparación (ttest, wilcox.test)
+Comparación (ttest, wilcox.test, var.test, prop.test)
 ## ●	Módulo 3: Ensayos de hipótesis en base a dos muestras.  
 Normalidad (shapiro.test)  
 Homogeneidad de variancias (fligner.test/var.test/bartlett.test)  
