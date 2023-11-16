@@ -55,23 +55,23 @@ _"Un laborario está probando dos métodos para cuantificar la concentración de
  - $n_Total$ = 28, $n_A$ = $n_B$=28  
   
 ## Guía para el ensayo de hipótesis en base a dos muestras  
-Previamente al paso a paso *debemos realizar el análisis del tipo de datos (apareados o no apareados) respecto del diseño para determinar si las muestras son dependientes o independientes.  
+Previamente al paso a paso debemos realizar el análisis del tipo de datos (apareados o no apareados) respecto del diseño para determinar si las muestras son dependientes o independientes. Luego procedemos como lo hicimos en el módulo 1:  
 1. Reconocer las hipótesis y poder plantearlas en término del parámetro de interés: μ, $σ^2$ , π. Puede suceder que queramos contrastar si los parámetros son iguales, contra la propuesta de que uno sea mayor (>), menor (<), o que sean distintos ( $\neq$ ) entre sí.
 2. Fijar el nivel de significación 𝛼: generalmente es 0.05.  
 3. Especificar la estadística base: combinación lineal de estimadores.  
   *i*. Análisis de la distribución muestral (Shapiro Wilk).  
   *ii*. Análisis de la homogeneidad de variancias (Barlett). 
-5. Decidir el test a utilizar:
+4. Decidir el test a utilizar:
    Comparación de promedios:
    - Distribución normal, variancias homogéneas: Test T de Welch (paired T o F dependiendo del diseño)
    - Distribución no normal o variancias no homogeneas: Test de Wilcoxon (paired T o F dependiendo del diseño)
    Comparación de proporciones:
    - _h_ = Test $\chi^2$ de Pearson
+   Comparación de proporciones:
    - $s^2$ = Test $\chi^2$ de la variancia
-7. Identificar la decisión de rechazo respecto del p-value.  
-8. Llevar adelante el test. 
-9. Tomar un decisión y concluir en términos de la situación planteada.  
-
+5. Identificar la decisión de rechazo respecto del p-value.  
+6. Llevar adelante el test. 
+7. Tomar un decisión y concluir en términos de la situación planteada.  
 ## Base de datos
 Utilizaremos la base de datos disponible para este módulo.
 - Seteo del directorio de trabajo
@@ -90,22 +90,17 @@ summary(datos)
 ## Comparación de promedios
 ### distribución normal, variancias homogéneas y muestras independientes
 Supongamos que queremos comparar la Glucosa promedio en personas que pertenecen a dos grupos diferentes (A y B):  
- - Variable: Glucosa en sangre.  
+ - Variable: Concentración de Glucosa en sangre.  
  - Factor: Grupo.  
  - Nivel: Grupo A, Grupo B.
  - Parámetro de interés: glucosa promedio (𝜇).  
  - Hipótesis de interés:
-   - H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A > 𝜇_B
-   - H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A < 𝜇_B
-   - H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A ( $\neq$ ) 𝜇_B
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ > $𝜇_B$
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ < $𝜇_B$
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
  - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}$_1 - $\overline{x}$_0).  
 #### Análisis
-1. H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$  
-   Reescribimos las hipóteis de manera de ensayar la diferencia:
-   H0) $𝜇_A$ - $𝜇_B$ = 0 vs H1) $𝜇_A$ - $𝜇_B$  $\neq$ 0
-3. 𝛼=0.05  
-4. $\overline{x}_A$ - $\overline{x}_B$  
-  *i*. Análisis de la distribución muestral (Shapiro Wilk).
+- **Análisis de la distribución muestral (Shapiro Wilk).**
 ```R
  shapiro.test(datos$Glucosa[datos$Grupo=="A"])
 ```
@@ -126,7 +121,7 @@ W = 0.99439, p-value = 0.9041
 ```
 **_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
   
-  *ii*. Análisis de la homogeneidad de variancias (Barlett).
+- **Análisis de la homogeneidad de variancias (Barlett).**
 ```R
 bartlett.test(list(
   datos$Glucosa[datos$Grupo=="A"],
@@ -140,8 +135,8 @@ data:  list(datos$Glucosa[datos$Grupo == "A"], datos$Glucosa[datos$Grupo == "B"]
 Bartlett's K-squared = 1.0472, df = 1, p-value = 0.3061
 ```
 **_Como el p>0.05, consideramos variancias homogéneas_**.  
-  
-4, 5 y 6. Test T de Student, bilateral
+- **Test T de Student**
+  - **Bilateral**
 ```R
 t.test(
   datos$Glucosa[datos$Grupo=="A"],
@@ -162,8 +157,7 @@ mean of x mean of y
  33.81323  50.06005 
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en ambas poblaciones es distinta_**.  
-  
-4, 5 y 6. Test T de Welch, unilateral a la derecha
+  - **Unilateral a la derecha**
 ```R
 t.test(
   datos$Glucosa[datos$Grupo=="A"],
@@ -184,8 +178,7 @@ mean of x mean of y
  33.81323  50.06005 
 ```
 **_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en la población A no es mayor que la de la población B_**.
-  
-4, 5 y 6. Test T de Welch, unilateral a la izquierda
+  - **Unilateral a la izquierda**
 ```R
 t.test(
   datos$Glucosa[datos$Grupo=="A"],
@@ -206,8 +199,7 @@ mean of x mean of y
  33.81323  50.06005 
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en la población A es menor que la de la población B_**.  
-  
-### distribución normal, variancias no homogéneas y muestras independientes
+### Distribución normal, variancias no homogéneas y muestras independientes
 Supongamos que queremos comparar el nivel promedio de HDL en personas que pertenecen a dos grupos diferentes (A y B):  
  - Variable: concentración de colesterol (HDL).  
  - Factor: Grupo.  
@@ -219,12 +211,7 @@ Supongamos que queremos comparar el nivel promedio de HDL en personas que perten
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
  - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}_A$ - $\overline{x}_B$).  
 #### Análisis
-1. H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$  
-   Reescribimos las hipóteis de manera de ensayar la diferencia:
-   H0) $𝜇_A$ - $𝜇_B$ = 0 vs H1) $𝜇_A$ - $𝜇_B$  $\neq$ 0
-3. 𝛼=0.05  
-4. $\overline{x}_A$ - $\overline{x}_B$  
-  *i*. Análisis de la distribución muestral (Shapiro Wilk).
+- **Análisis de la distribución muestral (Shapiro Wilk)**
 ```R
  shapiro.test(datos$HDL[datos$Grupo=="A"])
 ```
@@ -244,8 +231,7 @@ data:  datos$HDL[datos$Grupo == "B"]
 W = 0.9891, p-value = 0.4269
 ```
 **_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
-  
-   *ii*. Análisis de la homogeneidad de variancias (Barlett).
+-**Análisis de la homogeneidad de variancias (Barlett)**
 ```R
 bartlett.test(list(
   datos$HDL[datos$Grupo=="A"],
@@ -259,8 +245,8 @@ data:  list(datos$HDL[datos$Grupo == "A"], datos$HDL[datos$Grupo == "B"])
 Bartlett's K-squared = 13.178, df = 1, p-value = 0.0002832
 ```
 **_Como el p<0.05, consideramos que las variancias no son homogéneas_**.  
-  
-4, 5 y 6. Wilcoxon, bilateral
+  - **Bilateral**:
+H0) La concentración de HDL promedio es igual en ambas poblaciones vs H1) La concentración de HDL promedio es distinta en ambas poblaciones
 ```R
 wilcox.test(
   datos$HDL[datos$Grupo=="A"],
@@ -276,8 +262,8 @@ W = 3483, p-value = 3.665e-14
 alternative hypothesis: true location shift is not equal to 0
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en ambas poblaciones es distinta_**.  
-  
-4, 5 y 6. Wilcoxon, unilateral a la derecha
+ - **Unilateral a la derecha**
+H0) La concentración de HDL promedio es igual en ambas poblaciones vs H1) La concentración de HDL promedio en la población A es mayor que la de la población B.
 ```R
 wilcox.test(
   datos$HDL[datos$Grupo=="A"],
@@ -293,8 +279,8 @@ W = 3483, p-value = 1
 alternative hypothesis: true location shift is greater than 0
 ```
 **_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en la población A no es mayor que la de la población B_**.  
-  
-4, 5 y 6. Wilcoxon, unilateral a la izquierda
+ - **Unilateral a la izquierda**
+H0) La concentración de HDL promedio es igual en ambas poblaciones vs H1) La concentración de HDL promedio en la población A es menor que la de la población B.
 ```R
 wilcox.test(
   datos$HDL[datos$Grupo=="A"],
@@ -310,8 +296,7 @@ W = 3483, p-value = 1.833e-14
 alternative hypothesis: true location shift is less than 0
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en la población A es menor que la de la población B_**.  
-  
-### distribución normal, variancias homogéneas y muestras dependientes
+### Distribución normal, variancias homogéneas y muestras dependientes
 Supongamos que queremos comparar el nivel promedio de glucosa medida por dos métodos diferentes (A y B). Para ello se realizan determinaciones reiteradas de la misma muestra por los diferentes métodos. Este diseño genera muestras dependientes.  
  - Variable: concentración de glucosa en sangre.  
  - Factor: Método de determinación.  
@@ -323,12 +308,7 @@ Supongamos que queremos comparar el nivel promedio de glucosa medida por dos mé
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$  
  - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}_A$ - $\overline{x}_B$).  
 #### Análisis
-1. H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$  
-   Reescribimos las hipóteis de manera de ensayar la diferencia:
-   H0) $𝜇_A$ - $𝜇_B$ = 0 vs H1) $𝜇_A$ - $𝜇_B$  $\neq$ 0
-3. 𝛼=0.05  
-5. $\overline{x}_A$ - $\overline{x}_B$  
-  *i*. Análisis de la distribución muestral (Shapiro Wilk).
+- **Análisis de la distribución muestral (Shapiro Wilk).**
 ```R
  shapiro.test(datos$Glucosa[datos$Grupo=="A"])
 ```
@@ -348,8 +328,7 @@ data:  datos$Glucosa[datos$Metodo == "B"]
 W = 0.99439, p-value = 0.9041
 ```
 **_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
-  
-  *ii*. Análisis de la homogeneidad de variancias (Barlett).
+- **Análisis de la homogeneidad de variancias (Barlett).**
 ```R
 bartlett.test(list(
   datos$Glucosa[datos$Metodo=="A"],
@@ -363,8 +342,8 @@ data:  list(datos$Glucosa[datos$Metodo == "A"], datos$Glucosa[datos$Metodo == "B
 Bartlett's K-squared = 1.0472, df = 1, p-value = 0.3061
 ```
 **_Como el p<0.05, consideramos que las variancias son homogéneas_**.  
-  
-4, 5 y 6. Test T de Welch, bilateral, paired = TRUE
+ - **Bilateral**
+H0) La concentración de Glucosa promedio es igualmente determinada por ambos métodos vs H1) La concentración de Glucosa promedio no es igualmente determinada por ambos métodos.
 ```R
 t.test(
   datos$Glucosa[datos$Metodo=="A"],
@@ -385,8 +364,8 @@ mean difference
       -16.24683 
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio determinada por ambos métodos es distinta_**.  
-  
-4, 5 y 6. Test T de Welch, unilateral a la derecha, paired = TRUE
+ - **Unilateral a la derecha**
+H0) La concentración de Glucosa promedio es igualmente determinada por ambos métodos vs H1) La concentración de Glucosa promedio determinada por el método A es mayor que la determinada por el método B.
 ```R
 t.test(
   datos$Glucosa[datos$Metodo=="A"],
@@ -407,8 +386,8 @@ mean difference
       -16.24683 
 ```
 **_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio medida por el método A no es mayor_**.  
-
-4, 5 y 6. Test T de Welch, unilateral a la izquierda, paired = TRUE
+ - **Unilateral a la izquierda**
+H0) La concentración de Glucosa promedio es igualmente determinada por ambos métodos vs H1) La concentración de Glucosa promedio determinada por el método A es menor que la determinada por el método B.
 ```R
 t.test(
   datos$Glucosa[datos$Metodo=="A"],
@@ -429,8 +408,7 @@ mean difference
       -16.24683 
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio medida por el método A es menor_**.  
- 
-### distribución normal, variancias no homogéneas y muestras dependientes
+### Distribución normal, variancias no homogéneas y muestras dependientes
 Supongamos que queremos comparar el nivel promedio de glucosa antes (A) y despues (B) de un tratamiento con un medicamento. Este diseño de _antes y después_ genera muestras dependientes.  
  - Variable: concentración de glucosa en sangre.  
  - Factor: Medicamento.  
@@ -442,12 +420,7 @@ Supongamos que queremos comparar el nivel promedio de glucosa antes (A) y despue
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$  
  - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}_A$ - $\overline{x}_B$).  
 #### Análisis
-1. H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$  
-   Reescribimos las hipóteis de manera de ensayar la diferencia:
-   H0) $𝜇_A$ - $𝜇_B$ = 0 vs H1) $𝜇_A$ - $𝜇_B$  $\neq$ 0
-3. 𝛼=0.05  
-5. $\overline{x}_A$ - $\overline{x}_B$  
-  *i*. Análisis de la distribución muestral (Shapiro Wilk).
+- **Análisis de la distribución muestral (Shapiro Wilk).**
 ```R
  shapiro.test(datos$HDL[datos$Grupo=="A"])
 ```
@@ -467,8 +440,7 @@ data:  datos$HDL[datos$Grupo == "B"]
 W = 0.9891, p-value = 0.4269
 ```
 **_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
-  
-  *ii*. Análisis de la homogeneidad de variancias (Barlett).
+- **Análisis de la homogeneidad de variancias (Barlett).**
 ```R
 bartlett.test(list(
   datos$HDL[datos$Grupo=="A"],
@@ -482,8 +454,8 @@ data:  list(datos$HDL[datos$Grupo == "A"], datos$HDL[datos$Grupo == "B"])
 Bartlett's K-squared = 13.178, df = 1, p-value = 0.0002832
 ```
 **_Como el p<0.05, consideramos que las variancias no son homogéneas_**.  
-  
-4, 5 y 6. Wilcoxon, bilateral, paired = TRUE
+ - **Bilateral**
+H0) La concentración de Glucosa promedio es igual antes y despues del consumo del medicamento vs H1) La concentración de Glucosa promedio no es igual antes y despues del consumo del medicamento.
 ```R
 wilcox.test(
   datos$Glucosa[datos$Grupo=="A"],
@@ -499,13 +471,13 @@ V = 398, p-value < 2.2e-16
 alternative hypothesis: true location shift is not equal to 0
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio antes y despues del consumo del medicamento es distinta_**.  
-  
-4, 5 y 6. Wilcoxon, unilateral a la derecha, paired = TRUE
+- **Unilateral a la derecha**
+H0) La concentración de Glucosa promedio es igual antes y despues del consumo del medicamento vs H1) La concentración de Glucosa promedio antes del consumo del medicamento es mayor.
 ```R
 wilcox.test(
   datos$Glucosa[datos$Grupo=="A"],
   datos$Glucosa[datos$Grupo=="B"],
-  paired=TRUE, #pues los datos no están apareados, las muestras son dependientes
+  paired=TRUE, #pues los datos están apareados, las muestras son dependientes
   alternative="greater") # la alternativa es unilateral a la derecha
 ```
 ```R
@@ -516,13 +488,13 @@ V = 398, p-value = 1
 alternative hypothesis: true location shift is greater than 0
 ```
 **_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio antes del consumo del medicamento no es mayor_**.  
-
-4, 5 y 6. Wilcoxon, unilateral a la izquierda, paired = TRUE
+- **Unilateral a la izquierda**
+H0) La concentración de Glucosa promedio es igual antes y despues del consumo del medicamento vs H1) La concentración de Glucosa promedio antes del consumo del medicamento es menor.
 ```R
 wilcox.test(
   datos$Glucosa[datos$Grupo=="A"],
   datos$Glucosa[datos$Grupo=="B"],
-  paired=TRUE, #pues los datos no están apareados, las muestras son dependientes
+  paired=TRUE, #pues los datos están apareados, las muestras son dependientes
   alternative="less") #la alternativa es unilateral a la izquierda
 ```
 ```R
@@ -534,3 +506,197 @@ alternative hypothesis: true location shift is less than 0
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio antes del consumo del medicamento es es menor_**.  
 
+### Distribución no normal y muestras independientes
+Supongamos que queremos comparar el ácido úrico promedio en personas que pertenecen a dos grupos diferentes (A y B):  
+ - Variable: Concentración de ácido úrico en sangre.  
+ - Factor: Grupo.  
+ - Nivel: Grupo A, Grupo B.
+ - Parámetro de interés: glucosa promedio (𝜇).  
+ - Hipótesis de interés:
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ > $𝜇_B$
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ < $𝜇_B
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
+ - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}_A$ - $\overline{x}_B$).  
+#### Análisis
+- **Análisis de la distribución muestral (Shapiro Wilk).**
+```R
+shapiro.test(datos$Ac.Urico[datos$Grupo=="A"])
+```
+```R
+	Shapiro-Wilk normality test
+
+data:  datos$Ac.Urico[datos$Grupo == "A"]
+W = 0.93596, p-value = 1.588e-05
+```
+```R
+shapiro.test(datos$Ac.Urico[datos$Grupo=="B"])
+```
+```R
+	Shapiro-Wilk normality test
+
+data:  datos$Ac.Urico[datos$Grupo == "B"]
+W = 0.9424, p-value = 4.379e-05
+```
+**_Como el p<0.05, para al menos uno de los niveles, consideramos que no se cumple el supuesto de normalidad_**.  
+- **Bilateral**
+H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio no es igual en los dos grupos.
+```R
+wilcox.test(
+  datos$Ac.Urico[datos$Grupo=="A"],
+  datos$Ac.Urico[datos$Grupo=="B"],
+  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  alternative = "two.sided") # alternativa bilateral
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+
+data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
+W = 1225, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+```
+**_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio medida por ambos métodos es distinta_**.  
+- **Unilateral a la derecha**
+H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio en la población A es mayor que en la población B.
+```R
+wilcox.test(
+  datos$Ac.Urico[datos$Grupo=="A"],
+  datos$Ac.Urico[datos$Grupo=="B"],
+  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  alternative = "greater") # alternativa unilateral a la derecha
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+
+data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
+W = 1225, p-value = 1
+alternative hypothesis: true location shift is greater than 0
+```
+**_Aquí tenemos un p>0.05 por lo que aceptamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio medida por el método A no es mayor_**.  
+- **Unilateral a la izquierda**
+H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio en la población A es menor que en la población B.
+```R
+wilcox.test(
+  datos$Ac.Urico[datos$Grupo=="A"],
+  datos$Ac.Urico[datos$Grupo=="B"],
+  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  alternative = "less") # alternativa unilateral a la izquierda
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+
+data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
+W = 1225, p-value < 2.2e-16
+alternative hypothesis: true location shift is less than 0
+```
+**_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio medida por el método A es menor_**.  
+## Comparación de variancias  
+Supongamo que queremos comparar la precisión de dos métodos utilizados para la detección Glucosa. Podemos evaluar la precisión de un método a través de su variancia; cuanto mejor o mayor es la precisión, menor es la variancia.  
+ - Variable: Concentración de Glucosa en sangre.  
+ - Factor: Método.  
+ - Nivel: Método A, Método B.
+ - Parámetro de interés: glucosa promedio (𝜇).  
+ - Hipótesis de interés:
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ > $𝜇_B$
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ < $𝜇_B$
+   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
+ - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}$_1 - $\overline{x}$_0).  
+#### Análisis
+- **Análisis de la distribución muestral (Shapiro Wilk).**
+```R
+ shapiro.test(datos$Glucosa[datos$Grupo=="A"])
+```
+```R
+	Shapiro-Wilk normality test
+
+data:  datos$Glucosa[datos$Grupo == "A"]
+W = 0.99165, p-value = 0.6607
+```
+```R
+ shapiro.test(datos$Glucosa[datos$Grupo=="B"])
+```
+```R
+	Shapiro-Wilk normality test
+
+data:  datos$Glucosa[datos$Grupo == "B"]
+W = 0.99439, p-value = 0.9041
+```
+**_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
+  
+- **Análisis de la homogeneidad de variancias (Barlett).**
+```R
+bartlett.test(list(
+  datos$Glucosa[datos$Grupo=="A"],
+  datos$Glucosa[datos$Grupo=="B"]
+))
+```
+```R
+	Bartlett test of homogeneity of variances
+
+data:  list(datos$Glucosa[datos$Grupo == "A"], datos$Glucosa[datos$Grupo == "B"])
+Bartlett's K-squared = 1.0472, df = 1, p-value = 0.3061
+```
+**_Como el p>0.05, consideramos variancias homogéneas_**.  
+- **Test T de Student**
+  - **Bilateral**
+```R
+t.test(
+  datos$Glucosa[datos$Grupo=="A"],
+  datos$Glucosa[datos$Grupo=="B"],
+  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
+  alternative="two.sided") #la alternativa es bilateral
+```
+```R
+	Welch Two Sample t-test
+
+data:  datos$Glucosa[datos$Grupo == "A"] and datos$Glucosa[datos$Grupo == "B"]
+t = -13.102, df = 245.92, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -18.68918 -13.80447
+sample estimates:
+mean of x mean of y 
+ 33.81323  50.06005 
+```
+**_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en ambas poblaciones es distinta_**.  
+  - **Unilateral a la derecha**
+```R
+t.test(
+  datos$Glucosa[datos$Grupo=="A"],
+  datos$Glucosa[datos$Grupo=="B"],
+  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
+  alternative="greater") #la alternativa es unilateral a la derecha
+```
+```R
+	Welch Two Sample t-test
+
+data:  datos$Glucosa[datos$Grupo == "A"] and datos$Glucosa[datos$Grupo == "B"]
+t = -13.102, df = 245.92, p-value = 1
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ -18.29414       Inf
+sample estimates:
+mean of x mean of y 
+ 33.81323  50.06005 
+```
+**_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en la población A no es mayor que la de la población B_**.
+  - **Unilateral a la izquierda**
+```R
+t.test(
+  datos$Glucosa[datos$Grupo=="A"],
+  datos$Glucosa[datos$Grupo=="B"],
+  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
+  alternative="less") #la alternativa es unilateral a la izquierda
+```
+```R
+	Welch Two Sample t-test
+
+data:  datos$Glucosa[datos$Grupo == "A"] and datos$Glucosa[datos$Grupo == "B"]
+t = -13.102, df = 245.92, p-value < 2.2e-16
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+      -Inf -14.19951
+sample estimates:
+mean of x mean of y 
+ 33.81323  50.06005 
+```
+**_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en la población A es menor que la de la población B_**.  
