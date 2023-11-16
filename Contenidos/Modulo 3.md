@@ -135,7 +135,7 @@ data:  list(datos$Glucosa[datos$Grupo == "A"], datos$Glucosa[datos$Grupo == "B"]
 Bartlett's K-squared = 1.0472, df = 1, p-value = 0.3061
 ```
 **_Como el p>0.05, consideramos variancias homogéneas_**.  
-- **Test T de Student**
+- **Test T de Welch**
   - **Bilateral**
 ```R
 t.test(
@@ -231,7 +231,7 @@ data:  datos$HDL[datos$Grupo == "B"]
 W = 0.9891, p-value = 0.4269
 ```
 **_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
--**Análisis de la homogeneidad de variancias (Barlett)**
+- **Análisis de la homogeneidad de variancias (Barlett)**
 ```R
 bartlett.test(list(
   datos$HDL[datos$Grupo=="A"],
@@ -245,6 +245,7 @@ data:  list(datos$HDL[datos$Grupo == "A"], datos$HDL[datos$Grupo == "B"])
 Bartlett's K-squared = 13.178, df = 1, p-value = 0.0002832
 ```
 **_Como el p<0.05, consideramos que las variancias no son homogéneas_**.  
+- **Test de Wilcoxon**
   - **Bilateral**:
 H0) La concentración de HDL promedio es igual en ambas poblaciones vs H1) La concentración de HDL promedio es distinta en ambas poblaciones
 ```R
@@ -262,7 +263,7 @@ W = 3483, p-value = 3.665e-14
 alternative hypothesis: true location shift is not equal to 0
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en ambas poblaciones es distinta_**.  
- - **Unilateral a la derecha**
+  - **Unilateral a la derecha**
 H0) La concentración de HDL promedio es igual en ambas poblaciones vs H1) La concentración de HDL promedio en la población A es mayor que la de la población B.
 ```R
 wilcox.test(
@@ -279,7 +280,7 @@ W = 3483, p-value = 1
 alternative hypothesis: true location shift is greater than 0
 ```
 **_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en la población A no es mayor que la de la población B_**.  
- - **Unilateral a la izquierda**
+  - **Unilateral a la izquierda**
 H0) La concentración de HDL promedio es igual en ambas poblaciones vs H1) La concentración de HDL promedio en la población A es menor que la de la población B.
 ```R
 wilcox.test(
@@ -342,7 +343,8 @@ data:  list(datos$Glucosa[datos$Metodo == "A"], datos$Glucosa[datos$Metodo == "B
 Bartlett's K-squared = 1.0472, df = 1, p-value = 0.3061
 ```
 **_Como el p<0.05, consideramos que las variancias son homogéneas_**.  
- - **Bilateral**
+- **Test T de Welch**
+  - **Bilateral**
 H0) La concentración de Glucosa promedio es igualmente determinada por ambos métodos vs H1) La concentración de Glucosa promedio no es igualmente determinada por ambos métodos.
 ```R
 t.test(
@@ -364,7 +366,7 @@ mean difference
       -16.24683 
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio determinada por ambos métodos es distinta_**.  
- - **Unilateral a la derecha**
+  - **Unilateral a la derecha**
 H0) La concentración de Glucosa promedio es igualmente determinada por ambos métodos vs H1) La concentración de Glucosa promedio determinada por el método A es mayor que la determinada por el método B.
 ```R
 t.test(
@@ -386,7 +388,7 @@ mean difference
       -16.24683 
 ```
 **_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio medida por el método A no es mayor_**.  
- - **Unilateral a la izquierda**
+  - **Unilateral a la izquierda**
 H0) La concentración de Glucosa promedio es igualmente determinada por ambos métodos vs H1) La concentración de Glucosa promedio determinada por el método A es menor que la determinada por el método B.
 ```R
 t.test(
@@ -454,7 +456,8 @@ data:  list(datos$HDL[datos$Grupo == "A"], datos$HDL[datos$Grupo == "B"])
 Bartlett's K-squared = 13.178, df = 1, p-value = 0.0002832
 ```
 **_Como el p<0.05, consideramos que las variancias no son homogéneas_**.  
- - **Bilateral**
+- **Test de Wilcoxon**  
+  - **Bilateral**
 H0) La concentración de Glucosa promedio es igual antes y despues del consumo del medicamento vs H1) La concentración de Glucosa promedio no es igual antes y despues del consumo del medicamento.
 ```R
 wilcox.test(
@@ -471,7 +474,7 @@ V = 398, p-value < 2.2e-16
 alternative hypothesis: true location shift is not equal to 0
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio antes y despues del consumo del medicamento es distinta_**.  
-- **Unilateral a la derecha**
+  - **Unilateral a la derecha**
 H0) La concentración de Glucosa promedio es igual antes y despues del consumo del medicamento vs H1) La concentración de Glucosa promedio antes del consumo del medicamento es mayor.
 ```R
 wilcox.test(
@@ -488,7 +491,7 @@ V = 398, p-value = 1
 alternative hypothesis: true location shift is greater than 0
 ```
 **_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de Glucosa promedio antes del consumo del medicamento no es mayor_**.  
-- **Unilateral a la izquierda**
+  - **Unilateral a la izquierda**
 H0) La concentración de Glucosa promedio es igual antes y despues del consumo del medicamento vs H1) La concentración de Glucosa promedio antes del consumo del medicamento es menor.
 ```R
 wilcox.test(
@@ -538,7 +541,8 @@ data:  datos$Ac.Urico[datos$Grupo == "B"]
 W = 0.9424, p-value = 4.379e-05
 ```
 **_Como el p<0.05, para al menos uno de los niveles, consideramos que no se cumple el supuesto de normalidad_**.  
-- **Bilateral**
+- **Test de Wilcoxon**  
+  - **Bilateral**
 H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio no es igual en los dos grupos.
 ```R
 wilcox.test(
@@ -555,7 +559,7 @@ W = 1225, p-value < 2.2e-16
 alternative hypothesis: true location shift is not equal to 0
 ```
 **_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio medida por ambos métodos es distinta_**.  
-- **Unilateral a la derecha**
+  - **Unilateral a la derecha**
 H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio en la población A es mayor que en la población B.
 ```R
 wilcox.test(
@@ -572,7 +576,7 @@ W = 1225, p-value = 1
 alternative hypothesis: true location shift is greater than 0
 ```
 **_Aquí tenemos un p>0.05 por lo que aceptamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio medida por el método A no es mayor_**.  
-- **Unilateral a la izquierda**
+  - **Unilateral a la izquierda**
 H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio en la población A es menor que en la población B.
 ```R
 wilcox.test(
@@ -636,7 +640,7 @@ data:  list(datos$Glucosa[datos$Grupo == "A"], datos$Glucosa[datos$Grupo == "B"]
 Bartlett's K-squared = 1.0472, df = 1, p-value = 0.3061
 ```
 **_Como el p>0.05, consideramos variancias homogéneas_**.  
-- **Test T de Student**
+- **Test T de Welch**
   - **Bilateral**
 ```R
 t.test(
