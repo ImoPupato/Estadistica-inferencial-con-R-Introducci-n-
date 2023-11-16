@@ -58,7 +58,7 @@ _"Un laborario está probando dos métodos para cuantificar la concentración de
 Previamente al paso a paso debemos realizar el análisis del tipo de datos (apareados o no apareados) respecto del diseño para determinar si las muestras son dependientes o independientes. Luego procedemos como lo hicimos en el módulo 1:  
 1. Reconocer las hipótesis y poder plantearlas en término del parámetro de interés: μ, $σ^2$ , π. Puede suceder que queramos contrastar si los parámetros son iguales, contra la propuesta de que uno sea mayor (>), menor (<), o que sean distintos ( $\neq$ ) entre sí.
 2. Fijar el nivel de significación 𝛼: generalmente es 0.05.  
-3. Especificar la estadística base: combinación lineal de estimadores.  
+3. Especificar la estadística base: combinación lineal de estimadores (suma, resta o cociente).  
   *i*. Análisis de la distribución muestral (Shapiro Wilk).  
   *ii*. Análisis de la homogeneidad de variancias (Barlett). 
 4. Decidir el test a utilizar:
@@ -67,8 +67,8 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
    - Distribución no normal o variancias no homogeneas: Test de Wilcoxon (paired T o F dependiendo del diseño)
    Comparación de proporciones:
    - _h_ = Test $\chi^2$ de Pearson
-   Comparación de proporciones:
-   - $s^2$ = Test $\chi^2$ de la variancia
+   Comparación de variancias:
+   - Distribución normal: $s^2_1$/$s^2_2$ = Test F de cociente de variancias.  
 5. Identificar la decisión de rechazo respecto del p-value.  
 6. Llevar adelante el test. 
 7. Tomar un decisión y concluir en términos de la situación planteada.  
