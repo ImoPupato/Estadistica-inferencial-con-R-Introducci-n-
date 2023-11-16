@@ -54,13 +54,13 @@ _"Un laborario está probando dos métodos para cuantificar la concentración de
  - Estadística base para el análisis: cociente de variancias muestrales.  
  - n_Total=28, n_A=n_B=28  
   
-## Guía para el ensayo de hipótesis en base a dos muestras   
+## Guía para el ensayo de hipótesis en base a dos muestras  
+Previamente al paso a paso *debemos realizar el análisis del tipo de datos (apareados o no apareados) respecto del diseño para determinar si las muestras son dependientes o independientes.  
 1. Reconocer las hipótesis y poder plantearlas en término del parámetro de interés: μ, $σ^2$ , π. Puede suceder que queramos contrastar si los parámetros son iguales, contra la propuesta de que uno sea mayor (>), menor (<), o que sean distintos ( $\neq$ ) entre sí.
 2. Fijar el nivel de significación 𝛼: generalmente es 0.05.  
 3. Especificar la estadística base: combinación lineal de estimadores.  
   *i*. Análisis de la distribución muestral (Shapiro Wilk).
-  *ii*. Análisis de la homogeneidad de variancias (Barlett).
-  *iii*. Análisis del tipo de datos (apareados o no apareados) (respecto del diseño). 
+  *ii*. Análisis de la homogeneidad de variancias (Barlett). 
 5. Decidir el test a utilizar:
    Comparación de promedios:
    - Distribución normal, variancias homogéneas: Test T de Student (paired T o F dependiendo del diseño)
@@ -99,6 +99,7 @@ Supongamos que queremos comparar la Glucosa promedio en personas que pertenecen 
    - H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A ( $\neq$ ) 𝜇_B
  - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}$_1 - $\overline{x}$_0).  
 ### Análisis
+Son muestras independientes
 1. H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A $\neq$ 𝜇_B  
    Reescribimos las hipóteis de manera de ensayar la diferencia:
    H0) 𝜇_A - 𝜇_B = 0 vs H1) 𝜇_A - 𝜇_B  $\neq$ 0
@@ -305,4 +306,105 @@ W = 3483, p-value = 1.833e-14
 alternative hypothesis: true location shift is less than 0
 ```
 Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en la población A es menor que la de la población B.  
+## Comparación de promedios, variables normales, variancias homogéneas y muestras dependientes
+Supongamos que queremos comparar el nivel promedio de glucosa antes (A) y despues (B) de un tratamiento con un medicamento:  
+ - Variable: concentración de glucosa en sangre.  
+ - Factor: Medicamento.  
+ - Nivel: Sin o antes (A), Con o despues (B).
+ - Parámetro de interés: glucosa promedio (𝜇).  
+ - Hipótesis de interés:
+   - H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A > 𝜇_B
+   - H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A < 𝜇_B
+   - H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A ( $\neq$ ) 𝜇_B
+ - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}$_1 - $\overline{x}$_0).  
+### Análisis
+1. H0) 𝜇_A = 𝜇_B vs H1) 𝜇_A $\neq$ 𝜇_B  
+   Reescribimos las hipóteis de manera de ensayar la diferencia:
+   H0) 𝜇_A - 𝜇_B = 0 vs H1) 𝜇_A - 𝜇_B  $\neq$ 0
+3. 𝛼:0.05.  
+4. $\overline{x}$_A - $\overline{x}$_B  
+  *i*. Análisis de la distribución muestral (Shapiro Wilk).
+```R
+ shapiro.test(datos$HDL[datos$Grupo=="A"])
+```
+```R
+	Shapiro-Wilk normality test
+
+data:  datos$HDL[datos$Grupo == "A"]
+W = 0.99497, p-value = 0.9398
+```
+```R
+shapiro.test(datos$HDL[datos$Grupo=="B"])
+```
+```R
+	Shapiro-Wilk normality test
+
+data:  datos$HDL[datos$Grupo == "B"]
+W = 0.9891, p-value = 0.4269
+```
+Como el p>0.05, para ambos niveles, consideramos normalidad.  
+  *ii*. Análisis de la homogeneidad de variancias (Barlett).
+```R
+bartlett.test(list(
+  datos$HDL[datos$Grupo=="A"],
+  datos$HDL[datos$Grupo=="B"]
+))
+```
+```R
+	Bartlett test of homogeneity of variances
+
+data:  list(datos$HDL[datos$Grupo == "A"], datos$HDL[datos$Grupo == "B"])
+Bartlett's K-squared = 13.178, df = 1, p-value = 0.0002832
+```
+Como el p<0.05, consideramos que las variancias no son homogéneas.  
+**4, 5 y 6. Wilcoxon, bilateral**
+```R
+wilcox.test(
+  datos$HDL[datos$Grupo=="A"],
+  datos$HDL[datos$Grupo=="B"],
+  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
+  alternative="two.sided") #la alternativa es bilateral
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+
+data:  datos$HDL[datos$Grupo == "A"] and datos$HDL[datos$Grupo == "B"]
+W = 3483, p-value = 3.665e-14
+alternative hypothesis: true location shift is not equal to 0
+```
+Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en ambas poblaciones es distinta.
+
+**4, 5 y 6. Wilcoxon, unilateral a la derecha**
+```R
+wilcox.test(
+  datos$HDL[datos$Grupo=="A"],
+  datos$HDL[datos$Grupo=="B"],
+  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
+  alternative="greater") # la alternativa es unilateral a la derecha
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+
+data:  datos$HDL[datos$Grupo == "A"] and datos$HDL[datos$Grupo == "B"]
+W = 3483, p-value = 1
+alternative hypothesis: true location shift is greater than 0
+
+```
+Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en la población A no es mayor que la de la población B.  
+**4, 5 y 6. Wilcoxon, unilateral a la izquierda**
+```R
+wilcox.test(
+  datos$HDL[datos$Grupo=="A"],
+  datos$HDL[datos$Grupo=="B"],
+  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
+  alternative="less") #la alternativa es unilateral a la izquierda
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+
+data:  datos$HDL[datos$Grupo == "A"] and datos$HDL[datos$Grupo == "B"]
+W = 3483, p-value = 1.833e-14
+alternative hypothesis: true location shift is less than 0
+```
+Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de HDL promedio en la población A es menor que la de la población B.
 
