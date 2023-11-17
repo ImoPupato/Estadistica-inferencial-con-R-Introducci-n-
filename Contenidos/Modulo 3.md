@@ -254,7 +254,7 @@ Supongamos que queremos comparar el nivel promedio de HDL en personas que perten
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ > $𝜇_B$
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ < $𝜇_B$
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
- - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}_A$ - $\overline{x}_B$).  
+ - Estadística base para el análisis: diferencia de promedios muestrales ( $\overline{x}_A$ - $\overline{x}_B$ ).  
 #### Análisis
 - **Análisis de la distribución muestral (Shapiro Wilk).**
 ```R
