@@ -61,21 +61,22 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
 3. Especificar la estadística base: combinación lineal de estimadores (suma, resta o cociente).  
   *i*. Análisis de la distribución muestral (Shapiro Wilk).  
   *ii*. Análisis de la homogeneidad de variancias (Barlett). 
-4. Decidir el test a utilizar:
-   Comparación de promedios: Test T de Welch o Test de Wilcoxon
+4. Decidir el test a utilizar:  
+   Comparación de promedios:  
+   - $\overline{x}_1$ - $\overline{x}_2$ = Test T de Welch o Test de Wilcoxon
+     
+	| Distribución | Variancias | Tipo de muestras | Test| Argumentos del test |
+	|:-:|:-:|:-:|:-:|:-:|
+	|Normal|Homogéneas|Independientes| T de Welch| var.equal=TRUE, paired=FALSE|
+	|Normal|No homogéneas|Independientes| T de Welch| var.equal=FALSE, paired=FALSE|
+	|Normal|Homogéneas|Dependientes|  T de Welch| var.equal=TRUE, paired=TRUE|
+	|No normal| - |Independientes|Test de Wilcoxon| paired=TRUE|
+	|No normal| - |Dependientes|Test de Wilcoxon| paired=FALSE|
 
-	| Distribución | Variancias | Tipo de muestras | Argumentos del test |
-	|:-:|:-:|:-:|:-:|
-	|Normal|Homogéneas|Independientes|var.equal=TRUE, paired=FALSE|
-	|Normal|No homogéneas|Independientes|var.equal=FALSE, paired=FALSE|
-	|Normal|Homogéneas|Dependientes|var.equal=TRUE, paired=TRUE|
-	|No normal| - |Independientes| paired=TRUE|
-	|No normal| - |Dependientes|paired=FALSE|
-
-   Comparación de proporciones:
-   - _h_ = Test $\chi^2$ de Pearson  
    Comparación de variancias:  
    - $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.  
+   Comparación de proporciones:   
+   - $h_1$ - $h_2$ = Test de igualdad de proporciones
 6. Identificar la decisión de rechazo respecto del p-value.  
 7. Llevar adelante el test. 
 8. Tomar un decisión y concluir en términos de la situación planteada.  
@@ -739,7 +740,7 @@ _Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos qu
 
 ## Comparación de variancias  
 Supongamo que queremos comparar la **precisión** de dos métodos utilizados para la medición de HDL. Podemos evaluar la precisión de un método a través de su variancia; cuanto mejor o mayor es la precisión, menor es la variancia.  
- - Variable: Variancia en la dete de Glucosa en sangre.  
+ - Variable: concentración de Glucosa en sangre.  
  - Factor: Método.  
  - Nivel: Método A, Método B.
  - Parámetros de interés: variancias ($σ^2$).  
