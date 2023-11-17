@@ -74,7 +74,7 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
 7. Tomar un decisión y concluir en términos de la situación planteada.  
 
 ## Base de datos
-Utilizaremos la base de datos disponible para este módulo.
+Utilizaremos la [base de datos]([Contenidos/datos.txt](https://github.com/ImoPupato/Estadistica-inferencial-con-R-Introduccion-/blob/main/Contenidos/datos.txt)) disponible para este módulo.
 - Seteo del directorio de trabajo
 ```R
 setwd("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R")
@@ -108,7 +108,7 @@ boxplot(datos$HDL~datos$Medicamento, ylab= "Concentración de HDL", xlab="Medica
 boxplot(datos$Ac.Urico~datos$Grupo, ylab= "Concentración de HDL", xlab="Población")
 boxplot(datos$HDL~datos$Metodo, ylab= "Concentración de HDL", xlab="Método de determinación")
 ```
-![Boxplot](C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 3.jpg)
+[Boxplot]([Contenidos/Boxplot.png](https://github.com/ImoPupato/Estadistica-inferencial-con-R-Introduccion-/blob/main/Contenidos/Boxplot.png))
 ## Comparación de promedios
 ### Distribución normal, variancias homogéneas y muestras independientes
 Supongamos que queremos comparar la Glucosa promedio en personas que pertenecen a dos grupos diferentes (A y B):  
