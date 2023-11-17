@@ -182,7 +182,8 @@ t.test(
   datos$Glucosa[datos$Grupo=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
-  alternative="two.sided") #la alternativa es bilateral
+  alternative="two.sided", #la alternativa es bilateral
+  conf.level=0.95)
 ```
 ```R
 	Welch Two Sample t-test
@@ -204,7 +205,8 @@ t.test(
   datos$Glucosa[datos$Grupo=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
-  alternative="greater") #la alternativa es unilateral a la derecha
+  alternative="greater", #la alternativa es unilateral a la derecha
+  conf.level=0.95)
 ```
 ```R
 	Welch Two Sample t-test
@@ -225,7 +227,8 @@ t.test(
   datos$Glucosa[datos$Grupo=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
-  alternative="less") #la alternativa es unilateral a la izquierda
+  alternative="less", #la alternativa es unilateral a la izquierda
+  conf.level=0.95)
 ```
 ```R
 	Welch Two Sample t-test
@@ -289,7 +292,8 @@ t.test(
   datos$HDL[datos$Grupo=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = FALSE, #las variancias no son homogéneas, no las podemos considerar iguales
-  alternative="two.sided") #la alternativa es bilateral
+  alternative="two.sided", #la alternativa es bilateral
+  conf.level=0.95)
 ```
 ```R
 	Welch Two Sample t-test
@@ -311,7 +315,8 @@ t.test(
   datos$HDL[datos$Grupo=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = FALSE, #las variancias no son homogéneas, no las podemos considerar iguales
-  alternative="greater") #la alternativa es unilateral a la derecha
+  alternative="greater", #la alternativa es unilateral a la derecha
+  conf.level=0.95)
 ```
 ```R
 	Welch Two Sample t-test
@@ -333,7 +338,8 @@ t.test(
   datos$HDL[datos$Grupo=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = FALSE, #las variancias no son homogéneas, no las podemos considerar iguales
-  alternative="less") #la alternativa es unilateral a la izquierda
+  alternative="less", #prueba unilateral a la izquierda
+  conf.level=0.95)
 ```
 ```R
 	Welch Two Sample t-test
@@ -397,7 +403,8 @@ t.test(
   datos$Glucosa[datos$Metodo=="B"],
   paired=TRUE, # pues los datos están apareados, las muestras son dependientes
   var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
-  alternative = "two.sided")
+  alternative = "two.sided", #prueba bilateral
+  conf.level=0.95)
 ```
 ```R
 	Paired t-test
@@ -419,7 +426,8 @@ t.test(
   datos$Glucosa[datos$Metodo=="B"],
   paired=TRUE, # pues los datos están apareados, las muestras son dependientes
   var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
-  alternative = "greater")
+  alternative = "greater", #prueba unilateral a la derecha
+  conf.level=0.95)
 ```
 ```R
 	Paired t-test
@@ -441,7 +449,8 @@ t.test(
   datos$Glucosa[datos$Metodo=="B"],
   paired=TRUE, # pues los datos están apareados, las muestras son dependientes
   var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
-  alternative = "less")
+  alternative = "less", #prueba unilateral a la izquierda
+  conf.level=0.95)
 ```
 ```R
 	Paired t-test
@@ -505,7 +514,8 @@ t.test(
   datos$HDL[datos$Medicamento=="B"],
   paired=TRUE, #pues los datos están apareados, las muestras son dependientes
   var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
-  alternative="two.sided") #la alternativa es bilateral
+  alternative="two.sided", #la alternativa es bilateral
+  conf.level=0.95)
 ```
 ```R
 	Paired t-test
@@ -527,7 +537,8 @@ t.test(
   datos$HDL[datos$Medicamento=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = FALSE, #las variancias no son homogéneas, no las podemos considerar iguales
-  alternative="greater") #la alternativa es unilateral a la derecha
+  alternative="greater", #la alternativa es unilateral a la derecha
+  conf.level=0.95)
 ```
 ```R
 	Paired t-test
@@ -549,7 +560,8 @@ t.test(
   datos$HDL[datos$Medicamento=="B"],
   paired=FALSE, #pues los datos no están apareados, las muestras son independientes
   var.equal = FALSE, #las variancias no son homogéneas, no las podemos considerar iguales
-  alternative="less") #la alternativa es unilateral a la derecha
+  alternative="less", #la alternativa es unilateral a la derecha
+  conf.level=0.95)
 ```
 ```R
 	Paired t-test
@@ -599,7 +611,8 @@ wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
   paired=FALSE, # pues los datos están apareados, las muestras son independientes
-  alternative = "two.sided") # alternativa bilateral
+  alternative = "two.sided", # alternativa bilateral
+  conf.level=0.95)
 ```
 ```R
 	Wilcoxon rank sum test with continuity correction
@@ -616,7 +629,8 @@ wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
   paired=FALSE, # pues los datos están apareados, las muestras son independientes
-  alternative = "greater") # alternativa unilateral a la derecha
+  alternative = "greater", # alternativa unilateral a la derecha
+  conf.level=0.95)
 ```
 ```R
 	Wilcoxon rank sum test with continuity correction
@@ -632,7 +646,8 @@ wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
   paired=FALSE, # pues los datos están apareados, las muestras son independientes
-  alternative = "less") # alternativa unilateral a la izquierda
+  alternative = "less", # alternativa unilateral a la izquierda
+  conf.level=0.95)
 ```
 ```R
 	Wilcoxon rank sum test with continuity correction
@@ -647,12 +662,12 @@ Supongamos que queremos comparar el ácido úrico promedio en personas antes (A)
  - Variable: Concentración de ácido úrico en sangre.  
  - Factor: Medicamento.  
  - Nivel: antes (A), después (B).
- - Parámetro de interés: glucosa promedio (𝜇).  
+ - Parámetro de interés: ácido úrico promedio (𝜇).  
  - Hipótesis de interés:
-   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ > $𝜇_B$
-   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ < $𝜇_B
-   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
- - Estadística base para el análisis: rangos.  
+   - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable en la población A está desplazada a la derecha de la población B.
+   - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable en la población A está desplazada a la izquierda de la población B.
+   - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable no tiene la misma localización en ambas poblaciones.
+ - Estadística base para el análisis: rangos y signos.
 #### Análisis
 - **Análisis de la distribución muestral (Shapiro Wilk).**
 ```R
@@ -676,14 +691,14 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=FALSE, # pues los datos están apareados, las muestras son independientes
-  alternative = "two.sided") # alternativa bilateral
+  paired=TRUE, # pues los datos están apareados, las muestras son independientes
+  alternative = "two.sided", # alternativa bilateral
+  conf.level=0.95)
 ```
 ```R
-	Wilcoxon rank sum test with continuity correction
-
+	Wilcoxon signed rank test with continuity correction
 data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
-W = 1225, p-value < 2.2e-16
+V = 137, p-value < 2.2e-16
 alternative hypothesis: true location shift is not equal to 0
 ```
 _Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio en ambos grupos es distinta_.  
@@ -693,13 +708,14 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=FALSE, # pues los datos están apareados, las muestras son independientes
-  alternative = "greater") # alternativa unilateral a la derecha
+  paired=TRUE, # pues los datos están apareados, las muestras son independientes
+  alternative = "greater", # alternativa unilateral a la derecha
+  conf.level=0.95)
 ```
 ```R
-	Wilcoxon rank sum test with continuity correction
+	Wilcoxon signed rank test with continuity correction
 data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
-W = 1225, p-value = 1
+V = 137, p-value = 1
 alternative hypothesis: true location shift is greater than 0
 ```
 _Aquí tenemos un p>0.05 por lo que aceptamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio en la población A no es mayor_.  
@@ -709,13 +725,14 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=FALSE, # pues los datos están apareados, las muestras son independientes
-  alternative = "less") # alternativa unilateral a la izquierda
+  paired=TRUE, # pues los datos están apareados, las muestras son independientes
+  alternative = "less", # alternativa unilateral a la izquierda
+  conf.level=0.95)
 ```
 ```R
-	Wilcoxon rank sum test with continuity correction
+	Wilcoxon signed rank test with continuity correction
 data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
-W = 1225, p-value < 2.2e-16
+V = 137, p-value < 2.2e-16
 alternative hypothesis: true location shift is less than 0
 ```
 _Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio en la población A es menor_.  
@@ -725,17 +742,11 @@ Supongamo que queremos comparar la **precisión** de dos métodos utilizados par
  - Variable: Variancia en la dete de Glucosa en sangre.  
  - Factor: Método.  
  - Nivel: Método A, Método B.
- - Parámetros de interés: variancias ().  
- - Hipótesis de interés: para poder plantear las hipótesis necesitamos explorar previamente cómo son las variancias muestrales. 
-```R
-tapply(datos$HDL,factor(datos$Metodo),var)
-```
-```R
-       A        B 
-2011.547 1040.565 
-```
-_Como la variancia de A es mayor que la de B, escribiremos la hipótesis alternativa de modo que el cociente sea mayor a la unidad._
-H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ $\neq$ $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ $\neq$ 1
+ - Parámetros de interés: variancias ($σ^2$).  
+ - Hipótesis de interés:
+   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ > $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ > 1
+   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ < $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ < 1
+   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ > $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ $\neq$ 1
  - Estadística base para el análisis: Cociente de variancias muestrales ($S^2_A$ / $S^2_B$).  
 #### Análisis
 - **Análisis de la distribución muestral (Shapiro Wilk).**
@@ -753,81 +764,167 @@ data:  X[[i]]
 W = 0.9891, p-value = 0.4269```
 **_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
 ```
-- **Análisis de la homogeneidad de variancias (Barlett).**
+- **Test F de variancias**
+  - **Bilateral**
+H0) La precisión de ambos métodos es igual vs H1) La precisión de ambos métodos no es igual.
 ```R
-bartlett.test(list(
-  datos$Glucosa[datos$Grupo=="A"],
-  datos$Glucosa[datos$Grupo=="B"]
-))
+var.test(
+	datos$HDL[datos$Metodo=="A"], 
+	datos$HDL[datos$Metodo=="B"],
+	ratio =1, # valor de la hipótesis alternativa
+	alternative="two.sided", # prueba bilateral
+	conf.level=0.95)
 ```
 ```R
-	Bartlett test of homogeneity of variances
-
-data:  list(datos$Glucosa[datos$Grupo == "A"], datos$Glucosa[datos$Grupo == "B"])
-Bartlett's K-squared = 1.0472, df = 1, p-value = 0.3061
-```
-**_Como el p>0.05, consideramos variancias homogéneas_**.  
-- **Test T de Welch**
-  - **Bilateral**  
-```R
-t.test(
-  datos$Glucosa[datos$Grupo=="A"],
-  datos$Glucosa[datos$Grupo=="B"],
-  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
-  alternative="two.sided") #la alternativa es bilateral
-```
-```R
-	Welch Two Sample t-test
-
-data:  datos$Glucosa[datos$Grupo == "A"] and datos$Glucosa[datos$Grupo == "B"]
-t = -13.102, df = 245.92, p-value < 2.2e-16
-alternative hypothesis: true difference in means is not equal to 0
+	F test to compare two variances
+data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
+F = 1.9331, num df = 124, denom df = 124, p-value = 0.0002832
+alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- -18.68918 -13.80447
+ 1.357299 2.753254
 sample estimates:
-mean of x mean of y 
- 33.81323  50.06005 
+ratio of variances 
+          1.933129 
 ```
-**_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en ambas poblaciones es distinta_**.  
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que precisión de ambos métodos es diferente.  
   - **Unilateral a la derecha**  
+H0) La precisión de ambos métodos es igual vs H1) La precisión del método A es **menor** a la del método B. _(recordar que a mayor variancia, menor precisión)_
 ```R
-t.test(
-  datos$Glucosa[datos$Grupo=="A"],
-  datos$Glucosa[datos$Grupo=="B"],
-  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
-  alternative="greater") #la alternativa es unilateral a la derecha
+var.test(
+	datos$HDL[datos$Metodo=="A"], 
+	datos$HDL[datos$Metodo=="B"],
+	ratio =1, #valor de la hipótesis alternativa
+	alternative="greater", #prueba unilateral a la derecha
+	conf.level=0.95)
 ```
 ```R
-	Welch Two Sample t-test
-
-data:  datos$Glucosa[datos$Grupo == "A"] and datos$Glucosa[datos$Grupo == "B"]
-t = -13.102, df = 245.92, p-value = 1
-alternative hypothesis: true difference in means is greater than 0
+	F test to compare two variances
+data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
+F = 1.9331, num df = 124, denom df = 124, p-value = 0.0001416
+alternative hypothesis: true ratio of variances is greater than 1
 95 percent confidence interval:
- -18.29414       Inf
+ 1.437032      Inf
 sample estimates:
-mean of x mean of y 
- 33.81323  50.06005 
+ratio of variances 
+          1.933129 
 ```
-**_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en la población A no es mayor que la de la población B_**.
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la precisión del método A es menor que la del método B_.
   - **Unilateral a la izquierda**  
+H0) La precisión de ambos métodos es igual vs H1) La precisión del método A es **mayor** a la del método B. _(recordar que a menor variancia, mayor precisión)_
 ```R
-t.test(
-  datos$Glucosa[datos$Grupo=="A"],
-  datos$Glucosa[datos$Grupo=="B"],
-  paired=FALSE, #pues los datos no están apareados, las muestras son independientes
-  alternative="less") #la alternativa es unilateral a la izquierda
+var.test(
+	datos$HDL[datos$Metodo=="A"], 
+	datos$HDL[datos$Metodo=="B"],
+	ratio =1, #valor de la hipótesis alternativa
+	alternative="less", #prueba unilateral a la izquierda
+	conf.level=0.95)
 ```
 ```R
-	Welch Two Sample t-test
-
-data:  datos$Glucosa[datos$Grupo == "A"] and datos$Glucosa[datos$Grupo == "B"]
-t = -13.102, df = 245.92, p-value < 2.2e-16
-alternative hypothesis: true difference in means is less than 0
+	F test to compare two variances
+data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
+F = 1.9331, num df = 124, denom df = 124, p-value = 0.9999
+alternative hypothesis: true ratio of variances is less than 1
 95 percent confidence interval:
-      -Inf -14.19951
+ 0.000000 2.600491
 sample estimates:
-mean of x mean of y 
- 33.81323  50.06005 
+ratio of variances 
+          1.933129 
 ```
-**_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de glucosa promedio en la población A es menor que la de la población B_**.  
+_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la precisión del método A no es mayor que la del método B_.  
+
+## Comparación de proporciones  
+
+Supongamo que queremos comparar la **precisión** de dos métodos utilizados para la medición de HDL. Podemos evaluar la precisión de un método a través de su variancia; cuanto mejor o mayor es la precisión, menor es la variancia.  
+ - Variable: Variancia en la dete de Glucosa en sangre.  
+ - Factor: Método.  
+ - Nivel: Método A, Método B.
+ - Parámetros de interés: variancias ($σ^2$).  
+ - Hipótesis de interés:
+   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ > $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ > 1
+   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ < $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ < 1
+   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ > $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ $\neq$ 1
+ - Estadística base para el análisis: Cociente de variancias muestrales ($S^2_A$ / $S^2_B$).  
+#### Análisis
+- **Análisis de la distribución muestral (Shapiro Wilk).**
+```R
+lapply(split(datos$HDL,datos$Metodo),shapiro.test)
+```
+```R
+$A
+	Shapiro-Wilk normality test
+data:  X[[i]]
+W = 0.99497, p-value = 0.9398
+$B
+	Shapiro-Wilk normality test
+data:  X[[i]]
+W = 0.9891, p-value = 0.4269```
+**_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
+```
+- **Test F de variancias**
+  - **Bilateral**
+H0) La precisión de ambos métodos es igual vs H1) La precisión de ambos métodos no es igual.
+```R
+var.test(
+	datos$HDL[datos$Metodo=="A"], 
+	datos$HDL[datos$Metodo=="B"],
+	ratio =1, # valor de la hipótesis alternativa
+	alternative="two.sided", # prueba bilateral
+	conf.level=0.95)
+```
+```R
+	F test to compare two variances
+data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
+F = 1.9331, num df = 124, denom df = 124, p-value = 0.0002832
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 1.357299 2.753254
+sample estimates:
+ratio of variances 
+          1.933129 
+```
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que precisión de ambos métodos es diferente.  
+  - **Unilateral a la derecha**  
+H0) La precisión de ambos métodos es igual vs H1) La precisión del método A es **menor** a la del método B. _(recordar que a mayor variancia, menor precisión)_
+```R
+var.test(
+	datos$HDL[datos$Metodo=="A"], 
+	datos$HDL[datos$Metodo=="B"],
+	ratio =1, #valor de la hipótesis alternativa
+	alternative="greater", #prueba unilateral a la derecha
+	conf.level=0.95)
+```
+```R
+	F test to compare two variances
+data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
+F = 1.9331, num df = 124, denom df = 124, p-value = 0.0001416
+alternative hypothesis: true ratio of variances is greater than 1
+95 percent confidence interval:
+ 1.437032      Inf
+sample estimates:
+ratio of variances 
+          1.933129 
+```
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la precisión del método A es menor que la del método B_.
+  - **Unilateral a la izquierda**  
+H0) La precisión de ambos métodos es igual vs H1) La precisión del método A es **mayor** a la del método B. _(recordar que a menor variancia, mayor precisión)_
+```R
+var.test(
+	datos$HDL[datos$Metodo=="A"], 
+	datos$HDL[datos$Metodo=="B"],
+	ratio =1, #valor de la hipótesis alternativa
+	alternative="less", #prueba unilateral a la izquierda
+	conf.level=0.95)
+```
+```R
+	F test to compare two variances
+data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
+F = 1.9331, num df = 124, denom df = 124, p-value = 0.9999
+alternative hypothesis: true ratio of variances is less than 1
+95 percent confidence interval:
+ 0.000000 2.600491
+sample estimates:
+ratio of variances 
+          1.933129 
+```
+_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la precisión del método A no es mayor que la del método B_.  
+
