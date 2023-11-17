@@ -68,13 +68,13 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
    Comparación de proporciones:
    - _h_ = Test $\chi^2$ de Pearson
    Comparación de variancias:
-   - Distribución normal: $s^2_1$/$s^2_2$ = Test F de cociente de variancias.  
+   - Distribución normal: $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.  
 5. Identificar la decisión de rechazo respecto del p-value.  
 6. Llevar adelante el test. 
 7. Tomar un decisión y concluir en términos de la situación planteada.  
 
 ## Base de datos
-Utilizaremos la [base de datos]([Contenidos/datos.txt](https://github.com/ImoPupato/Estadistica-inferencial-con-R-Introduccion-/blob/main/Contenidos/datos.txt)) disponible para este módulo.
+Utilizaremos la [base de datos](https://github.com/ImoPupato/Estadistica-inferencial-con-R-Introduccion-/blob/main/Contenidos/datos.txt) disponible para este módulo.
 - Seteo del directorio de trabajo
 ```R
 setwd("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R")
@@ -108,7 +108,12 @@ boxplot(datos$HDL~datos$Medicamento, ylab= "Concentración de HDL", xlab="Medica
 boxplot(datos$Ac.Urico~datos$Grupo, ylab= "Concentración de HDL", xlab="Población")
 boxplot(datos$HDL~datos$Metodo, ylab= "Concentración de HDL", xlab="Método de determinación")
 ```
-[Boxplot]([Contenidos/Boxplot.png](https://github.com/ImoPupato/Estadistica-inferencial-con-R-Introduccion-/blob/main/Contenidos/Boxplot.png))
+<div>
+<p style = 'text-align:center;'>
+<img src="https://github.com/ImoPupato/Estadistica-inferencial-con-R-Introduccion-/blob/main/Contenidos/Boxplot.png")>
+</p>
+</div>
+
 ## Comparación de promedios
 ### Distribución normal, variancias homogéneas y muestras independientes
 Supongamos que queremos comparar la Glucosa promedio en personas que pertenecen a dos grupos diferentes (A y B):  
