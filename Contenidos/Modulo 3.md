@@ -73,9 +73,9 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
 	|No normal| - |Dependientes|paired=FALSE|
 
    Comparación de proporciones:
-   - _h_ = Test $\chi^2$ de Pearson
-   Comparación de variancias:
-   - Distribución normal: $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.  
+   - _h_ = Test $\chi^2$ de Pearson  
+   Comparación de variancias:  
+   - $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.  
 6. Identificar la decisión de rechazo respecto del p-value.  
 7. Llevar adelante el test. 
 8. Tomar un decisión y concluir en términos de la situación planteada.  
@@ -833,98 +833,84 @@ ratio of variances
 _Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la precisión del método A no es mayor que la del método B_.  
 
 ## Comparación de proporciones  
-
-Supongamo que queremos comparar la **precisión** de dos métodos utilizados para la medición de HDL. Podemos evaluar la precisión de un método a través de su variancia; cuanto mejor o mayor es la precisión, menor es la variancia.  
- - Variable: Variancia en la dete de Glucosa en sangre.  
- - Factor: Método.  
- - Nivel: Método A, Método B.
- - Parámetros de interés: variancias ($σ^2$).  
+Supongamo que queremos comparar las proporciones de personas con glucosa en sangre mayor a 35 mg/dl en las dos poblaciones.  
+ - Variable: Glucosa en sangre.  
+ - Factor: Grupo.  
+ - Nivel: Grupo A, Grupo B.
+ - Parámetros de interés: proporción de personas que cumplen con el criterio (π).  
  - Hipótesis de interés:
-   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ > $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ > 1
-   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ < $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ < 1
-   - H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ > $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ $\neq$ 1
- - Estadística base para el análisis: Cociente de variancias muestrales ($S^2_A$ / $S^2_B$).  
-#### Análisis
-- **Análisis de la distribución muestral (Shapiro Wilk).**
+   - H0)  $π_A$ = $π_B$ vs H1) $π_A$ > $π_B$ que puede reescribirse como H0) $π_A$ - $π_B$ = 0 vs H1) $π_A$ - $π_B$ > 0 
+   - H0)  $π_A$ = $π_B$ vs H1) $π_A$ < $π_B$  que puede reescribirse como H0) $π_A$ - $π_B$ = 0 vs H1) $π_A$ - $π_B$ < 0 
+   - H0)  $π_A$ = $π_B$ vs H1) $π_A$ $\neq$ $π_B$  que puede reescribirse como H0)  $π_A$ - $π_B$ = 0 vs H1) $π_A$ - $π_B$ $\neq$ 0 
+ - Estadística base para el análisis: Diferencia de frecuencias ($h_A$ - $h_B$).  
+#### Análisis  
+Primero calculamos $h_A$ y $h_B$ que son los sucesos exitosos (personas que cumple con el criterio) sobre el total de cada grupo:
 ```R
-lapply(split(datos$HDL,datos$Metodo),shapiro.test)
+sum(datos$Glucosa[datos$Grupo=="A"]>35)
+[1] 58
+sum(datos$Glucosa[datos$Grupo=="B"]>35)
+[1] 118
 ```
-```R
-$A
-	Shapiro-Wilk normality test
-data:  X[[i]]
-W = 0.99497, p-value = 0.9398
-$B
-	Shapiro-Wilk normality test
-data:  X[[i]]
-W = 0.9891, p-value = 0.4269```
-**_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
-```
-- **Test F de variancias**
+- **Test de igualdad de proporciones**
   - **Bilateral**
-H0) La precisión de ambos métodos es igual vs H1) La precisión de ambos métodos no es igual.
+H0) La proporción de personas con glucosa mayor a 35 mg/dL es igual en ambas poblaciones vs H1)  La proporción de personas con glucosa mayor a 35 mg/dL no es igual en ambas poblaciones.
 ```R
-var.test(
-	datos$HDL[datos$Metodo=="A"], 
-	datos$HDL[datos$Metodo=="B"],
-	ratio =1, # valor de la hipótesis alternativa
-	alternative="two.sided", # prueba bilateral
-	conf.level=0.95)
+prop.test(x=c(58, 118), #cantidad de observaciones que cumplen con el criterio
+          n=c(250, 250), #tamaño de cada una de las muestras
+          alternative='two.sided', #prueba bilateral
+          conf.level=0.95)
 ```
 ```R
-	F test to compare two variances
-data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
-F = 1.9331, num df = 124, denom df = 124, p-value = 0.0002832
-alternative hypothesis: true ratio of variances is not equal to 1
+	2-sample test for equality of proportions with continuity correction
+data:  c(58, 118) out of c(250, 250)
+X-squared = 30.522, df = 1, p-value = 3.301e-08
+alternative hypothesis: two.sided
 95 percent confidence interval:
- 1.357299 2.753254
+ -0.3250385 -0.1549615
 sample estimates:
-ratio of variances 
-          1.933129 
+prop 1 prop 2 
+ 0.232  0.472 
 ```
-_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que precisión de ambos métodos es diferente.  
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl no es igual en ambas poblaciones.  
   - **Unilateral a la derecha**  
-H0) La precisión de ambos métodos es igual vs H1) La precisión del método A es **menor** a la del método B. _(recordar que a mayor variancia, menor precisión)_
+H0) La proporción de personas con glucosa mayor a 35 mg/dL es igual en ambas poblaciones vs H1)  La proporción de personas con glucosa mayor a 35 mg/dL en la población A es mayor a la población B.
 ```R
-var.test(
-	datos$HDL[datos$Metodo=="A"], 
-	datos$HDL[datos$Metodo=="B"],
-	ratio =1, #valor de la hipótesis alternativa
-	alternative="greater", #prueba unilateral a la derecha
-	conf.level=0.95)
+prop.test(x=c(58, 118), #cantidad de observaciones que cumplen con el criterio
+          n=c(250, 250), #tamaño de cada una de las muestras
+          alternative='greater', #prueba unilateral a la derecha
+          conf.level=0.95)
 ```
 ```R
-	F test to compare two variances
-data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
-F = 1.9331, num df = 124, denom df = 124, p-value = 0.0001416
-alternative hypothesis: true ratio of variances is greater than 1
-95 percent confidence interval:
- 1.437032      Inf
-sample estimates:
-ratio of variances 
-          1.933129 
-```
-_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la precisión del método A es menor que la del método B_.
-  - **Unilateral a la izquierda**  
-H0) La precisión de ambos métodos es igual vs H1) La precisión del método A es **mayor** a la del método B. _(recordar que a menor variancia, mayor precisión)_
-```R
-var.test(
-	datos$HDL[datos$Metodo=="A"], 
-	datos$HDL[datos$Metodo=="B"],
-	ratio =1, #valor de la hipótesis alternativa
-	alternative="less", #prueba unilateral a la izquierda
-	conf.level=0.95)
-```
-```R
-	F test to compare two variances
-data:  datos$HDL[datos$Metodo == "A"] and datos$HDL[datos$Metodo == "B"]
-F = 1.9331, num df = 124, denom df = 124, p-value = 0.9999
-alternative hypothesis: true ratio of variances is less than 1
-95 percent confidence interval:
- 0.000000 2.600491
-sample estimates:
-ratio of variances 
-          1.933129 
-```
-_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la precisión del método A no es mayor que la del método B_.  
+	2-sample test for equality of proportions with continuity correction
 
+data:  c(58, 118) out of c(250, 250)
+X-squared = 30.522, df = 1, p-value = 1
+alternative hypothesis: greater
+95 percent confidence interval:
+ -0.3120096  1.0000000
+sample estimates:
+prop 1 prop 2 
+ 0.232  0.472 
+```
+_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl en la población A no es mayor a la población B.  
+  - **Unilateral a la izquierda**  
+H0) La proporción de personas con glucosa mayor a 35 mg/dL es igual en ambas poblaciones vs H1)  La proporción de personas con glucosa mayor a 35 mg/dL en la población A es menor a la población B.
+```R
+prop.test(x=c(58, 118), #cantidad de observaciones que cumplen con el criterio
+          n=c(250, 250), #tamaño de cada una de las muestras
+          alternative='less', #prueba unilateral a la derecha
+          conf.level=0.95)
+```
+```R
+	2-sample test for equality of proportions with continuity correction
+data:  c(58, 118) out of c(250, 250)
+X-squared = 30.522, df = 1, p-value = 1.65e-08
+alternative hypothesis: less
+95 percent confidence interval:
+ -1.0000000 -0.1679904
+sample estimates:
+prop 1 prop 2 
+ 0.232  0.472 
+ 
+```
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl en la población A es menor a la población B.  
