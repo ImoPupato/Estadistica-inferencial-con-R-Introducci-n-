@@ -50,8 +50,8 @@ _"Un laborario está probando dos métodos para cuantificar la concentración de
  - Unidad experimental: Comprimido. Unidades homogéneas, diseño completamente aleatorizado, muestras independientes.  
  - Población: Todos los comprimidos.
  - Parámetro de interés: variancia poblacional.
- - Hipótesis de interés: H0) $σ^2_A$ = $σ^2_B$ H1) $σ^2_B$ > $σ^2_A$.  
- - Estadística base para el análisis: cociente de variancias muestrales, $s^2_1$/$s^2_2$.  
+ - Hipótesis de interés: H0) $σ^2_A$ = $σ^2_B$ H1) $σ^2_A$ > $σ^2_B$.  
+ - Estadística base para el análisis: cociente de variancias muestrales, $s^2_1$ / $s^2_2$.  
  - $n_Total$ = 28, $n_A$ = $n_B$=28  
   
 ## Guía para el ensayo de hipótesis en base a dos muestras  
@@ -62,17 +62,34 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
   *i*. Análisis de la distribución muestral (Shapiro Wilk).  
   *ii*. Análisis de la homogeneidad de variancias (Barlett). 
 4. Decidir el test a utilizar:
-   Comparación de promedios:
-   - Distribución normal, variancias homogéneas: Test T de Welch (paired T o F dependiendo del diseño)
-   - Distribución no normal o variancias no homogeneas: Test de Wilcoxon (paired T o F dependiendo del diseño)
+   Comparación de promedios: Test T de Welch o Test de Wilcoxon
+
+	| Distribución | Variancias | Tipo de muestras | Argumentos del test |
+	|:-:|:-:|:-:|:-:|
+	|Normal|Homogéneas|Independientes|var.equal=TRUE, paired=FALSE|
+	|Normal|No homogéneas|Independientes|var.equal=FALSE, paired=FALSE|
+	|Normal|Homogéneas|Dependientes|var.equal=TRUE, paired=TRUE|
+	|No normal| - |Independientes| paired=TRUE|
+	|No normal| - |Dependientes|paired=FALSE|
+
    Comparación de proporciones:
    - _h_ = Test $\chi^2$ de Pearson
    Comparación de variancias:
    - Distribución normal: $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.  
-5. Identificar la decisión de rechazo respecto del p-value.  
-6. Llevar adelante el test. 
-7. Tomar un decisión y concluir en términos de la situación planteada.  
+6. Identificar la decisión de rechazo respecto del p-value.  
+7. Llevar adelante el test. 
+8. Tomar un decisión y concluir en términos de la situación planteada.  
 
+#### Test F de cociente de variancias  
+Para llevar adelante este test de contraste de cocientes, se construyen dos variables $U_1$ y $U_2$, que cumplan lo siguiente:  
+
+$U_1$ =  $\frac{(n_1 - 1) S^2_1}{σ_1^2}$ ~ $\chi^2_{n1-1}$  
+  
+$U_1$ =  $\frac{(n_2 - 1) S^2_2}{σ_2^2}$ ~ $\chi^2_{n_2-1}$  
+  
+De este modo, el cociente de ambas variables (bajo la H0 cierta) va a tener la siguiente distribución:  
+$\frac{U_1}{U_2}$ ~ $F_{n1-1;n2-1}$
+  
 ## Base de datos
 Utilizaremos la [base de datos](https://github.com/ImoPupato/Estadistica-inferencial-con-R-Introduccion-/blob/main/Contenidos/datos.txt) disponible para este módulo.
 - Seteo del directorio de trabajo
@@ -626,37 +643,38 @@ alternative hypothesis: true location shift is less than 0
 _Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio en la población A es menor_.  
 
 ## Comparación de variancias  
-Supongamo que queremos comparar la precisión de dos métodos utilizados para la detección Glucosa. Podemos evaluar la precisión de un método a través de su variancia; cuanto mejor o mayor es la precisión, menor es la variancia.  
- - Variable: Concentración de Glucosa en sangre.  
+Supongamo que queremos comparar la **precisión** de dos métodos utilizados para la medición de HDL. Podemos evaluar la precisión de un método a través de su variancia; cuanto mejor o mayor es la precisión, menor es la variancia.  
+ - Variable: Variancia en la dete de Glucosa en sangre.  
  - Factor: Método.  
  - Nivel: Método A, Método B.
- - Parámetro de interés: glucosa promedio (𝜇).  
- - Hipótesis de interés:
-   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ > $𝜇_B$
-   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ < $𝜇_B$
-   - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
- - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}$_1 - $\overline{x}$_0).  
+ - Parámetros de interés: variancias ().  
+ - Hipótesis de interés: para poder plantear las hipótesis necesitamos explorar previamente cómo son las variancias muestrales. 
+```R
+tapply(datos$HDL,factor(datos$Metodo),var)
+```
+```R
+       A        B 
+2011.547 1040.565 
+```
+_Como la variancia de A es mayor que la de B, escribiremos la hipótesis alternativa de modo que el cociente sea mayor a la unidad._
+H0)  $σ^2_A$ = $σ^2_B$ vs H1) $σ^2_A$ $\neq$ $σ^2_B$ que puede reescribirse como H0)  $σ^2_A$ / $σ^2_B$ = 1 vs H1) $σ^2_A$ / $σ^2_B$ $\neq$ 1
+ - Estadística base para el análisis: Cociente de variancias muestrales ($S^2_A$ / $S^2_B$).  
 #### Análisis
 - **Análisis de la distribución muestral (Shapiro Wilk).**
 ```R
- shapiro.test(datos$Glucosa[datos$Grupo=="A"])
+lapply(split(datos$HDL,datos$Metodo),shapiro.test)
 ```
 ```R
+$A
 	Shapiro-Wilk normality test
-data:  datos$Glucosa[datos$Grupo == "A"]
-W = 0.99165, p-value = 0.6607
-```
-```R
- shapiro.test(datos$Glucosa[datos$Grupo=="B"])
-```
-```R
+data:  X[[i]]
+W = 0.99497, p-value = 0.9398
+$B
 	Shapiro-Wilk normality test
-
-data:  datos$Glucosa[datos$Grupo == "B"]
-W = 0.99439, p-value = 0.9041
-```
+data:  X[[i]]
+W = 0.9891, p-value = 0.4269```
 **_Como el p>0.05, para ambos niveles, consideramos normalidad_**.  
-  
+```
 - **Análisis de la homogeneidad de variancias (Barlett).**
 ```R
 bartlett.test(list(
