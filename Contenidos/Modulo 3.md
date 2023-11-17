@@ -571,10 +571,88 @@ Supongamos que queremos comparar el ácido úrico promedio en personas que perte
  - Nivel: Grupo A, Grupo B.
  - Parámetro de interés: glucosa promedio (𝜇).  
  - Hipótesis de interés:
+   - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable en la población A está desplazada a la derecha de la población B.
+   - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable en la población A está desplazada a la izquierda de la población B.
+   - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable no tiene la misma localización en ambas poblaciones.
+ - Estadística base para el análisis: rangos.  
+#### Análisis
+- **Análisis de la distribución muestral (Shapiro Wilk).**
+```R
+lapply(split(datos$Ac.Urico,datos$Grupo),shapiro.test)
+```
+```R
+$A
+	Shapiro-Wilk normality test
+data:  X[[i]]
+W = 0.93596, p-value = 1.588e-05
+$B
+	Shapiro-Wilk normality test
+data:  X[[i]]
+W = 0.9424, p-value = 4.379e-05
+```
+_Como el p<0.05, para al menos uno de los niveles, consideramos que no se cumple el supuesto de normalidad_.  
+- **Test de Wilcoxon**  
+  - **Bilateral**  
+H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio no es igual en los dos grupos.
+```R
+wilcox.test(
+  datos$Ac.Urico[datos$Grupo=="A"],
+  datos$Ac.Urico[datos$Grupo=="B"],
+  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  alternative = "two.sided") # alternativa bilateral
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+
+data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
+W = 1225, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+```
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio en ambos grupos es distinta_.  
+-  - **Unilateral a la derecha**  
+H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio en la población A es mayor que en la población B.
+```R
+wilcox.test(
+  datos$Ac.Urico[datos$Grupo=="A"],
+  datos$Ac.Urico[datos$Grupo=="B"],
+  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  alternative = "greater") # alternativa unilateral a la derecha
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
+W = 1225, p-value = 1
+alternative hypothesis: true location shift is greater than 0
+```
+_Aquí tenemos un p>0.05 por lo que aceptamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio en la población A no es mayor_.  
+-  - **Unilateral a la izquierda**  
+H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1) La concentración de ácido úrico promedio en la población A es menor que en la población B.
+```R
+wilcox.test(
+  datos$Ac.Urico[datos$Grupo=="A"],
+  datos$Ac.Urico[datos$Grupo=="B"],
+  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  alternative = "less") # alternativa unilateral a la izquierda
+```
+```R
+	Wilcoxon rank sum test with continuity correction
+data:  datos$Ac.Urico[datos$Grupo == "A"] and datos$Ac.Urico[datos$Grupo == "B"]
+W = 1225, p-value < 2.2e-16
+alternative hypothesis: true location shift is less than 0
+```
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la concentración de ácido úrico promedio en la población A es menor_.  
+
+### Distribución no normal y muestras dependientes
+Supongamos que queremos comparar el ácido úrico promedio en personas antes (A) y después (B) del consumo de un medicamento. Este diseño de _antes y después_ genera muestras dependientes:  
+ - Variable: Concentración de ácido úrico en sangre.  
+ - Factor: Medicamento.  
+ - Nivel: antes (A), después (B).
+ - Parámetro de interés: glucosa promedio (𝜇).  
+ - Hipótesis de interés:
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ > $𝜇_B$
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ < $𝜇_B
    - H0) $𝜇_A$ = $𝜇_B$ vs H1) $𝜇_A$ $\neq$ $𝜇_B$
- - Estadística base para el análisis: diferencia de promedios muestrales ($\overline{x}_A$ - $\overline{x}_B$).  
+ - Estadística base para el análisis: rangos.  
 #### Análisis
 - **Análisis de la distribución muestral (Shapiro Wilk).**
 ```R
