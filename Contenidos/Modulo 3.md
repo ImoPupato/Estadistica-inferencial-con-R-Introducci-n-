@@ -873,7 +873,7 @@ sample estimates:
 prop 1 prop 2 
  0.232  0.472 
 ```
-_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl no es igual en ambas poblaciones.  
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl no es igual en ambas poblaciones_.  
   - **Unilateral a la derecha**  
 H0) La proporción de personas con glucosa mayor a 35 mg/dL es igual en ambas poblaciones vs H1)  La proporción de personas con glucosa mayor a 35 mg/dL en la población A es mayor a la población B.
 ```R
@@ -894,7 +894,7 @@ sample estimates:
 prop 1 prop 2 
  0.232  0.472 
 ```
-_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl en la población A no es mayor a la población B.  
+_Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl en la población A no es mayor a la población B_.  
   - **Unilateral a la izquierda**  
 H0) La proporción de personas con glucosa mayor a 35 mg/dL es igual en ambas poblaciones vs H1)  La proporción de personas con glucosa mayor a 35 mg/dL en la población A es menor a la población B.
 ```R
@@ -915,4 +915,4 @@ prop 1 prop 2
  0.232  0.472 
  
 ```
-_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl en la población A es menor a la población B.  
+_Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos que la proporción de personas con glucosa mayor a 35ng/dl en la población A es menor a la población B_.  
