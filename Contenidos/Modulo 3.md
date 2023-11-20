@@ -70,8 +70,8 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
 	|Normal|Homogéneas|Independientes| T de Welch| var.equal=TRUE, paired=FALSE|
 	|Normal|No homogéneas|Independientes| T de Welch| var.equal=FALSE, paired=FALSE|
 	|Normal|Homogéneas|Dependientes|  T de Welch| var.equal=TRUE, paired=TRUE|
-	|No normal| - |Independientes|Test de Wilcoxon| paired=TRUE|
-	|No normal| - |Dependientes|Test de Wilcoxon| paired=FALSE|
+	|No normal| - |Independientes|Test de Wilcoxon| paired=FALSE|
+	|No normal| - |Dependientes|Test de Wilcoxon| paired=TRUE|
 
    Comparación de variancias:  
    - $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.
