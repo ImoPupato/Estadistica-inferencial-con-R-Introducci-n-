@@ -612,7 +612,7 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  paired=FALSE, # pues los datos no están apareados, las muestras son independientes
   alternative = "two.sided", # alternativa bilateral
   conf.level=0.95)
 ```
@@ -630,7 +630,7 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  paired=FALSE, # pues los datos no están apareados, las muestras son independientes
   alternative = "greater", # alternativa unilateral a la derecha
   conf.level=0.95)
 ```
@@ -647,7 +647,7 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=FALSE, # pues los datos están apareados, las muestras son independientes
+  paired=FALSE, # pues los datos no están apareados, las muestras son independientes
   alternative = "less", # alternativa unilateral a la izquierda
   conf.level=0.95)
 ```
@@ -693,7 +693,7 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=TRUE, # pues los datos están apareados, las muestras son independientes
+  paired=TRUE, # pues los datos están apareados, las muestras son dependientes
   alternative = "two.sided", # alternativa bilateral
   conf.level=0.95)
 ```
@@ -710,7 +710,7 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=TRUE, # pues los datos están apareados, las muestras son independientes
+  paired=TRUE, # pues los datos están apareados, las muestras son dependientes
   alternative = "greater", # alternativa unilateral a la derecha
   conf.level=0.95)
 ```
@@ -727,7 +727,7 @@ H0) La concentración de ácido úrico promedio es igual en los dos grupos vs H1
 wilcox.test(
   datos$Ac.Urico[datos$Grupo=="A"],
   datos$Ac.Urico[datos$Grupo=="B"],
-  paired=TRUE, # pues los datos están apareados, las muestras son independientes
+  paired=TRUE, # pues los datos están apareados, las muestras son dependientes
   alternative = "less", # alternativa unilateral a la izquierda
   conf.level=0.95)
 ```
@@ -741,7 +741,7 @@ _Aquí tenemos un p<0.05 por lo que rechazamos H0 y por lo tanto consideramos qu
 
 ## Comparación de variancias  
 Supongamo que queremos comparar la **precisión** de dos métodos utilizados para la medición de HDL. Podemos evaluar la precisión de un método a través de su variancia; cuanto mejor o mayor es la precisión, menor es la variancia.  
- - Variable: concentración de Glucosa en sangre.  
+ - Variable: concentración de HDL.  
  - Factor: Método.  
  - Nivel: Método A, Método B.
  - Parámetros de interés: variancias ($σ^2$).  
@@ -835,7 +835,7 @@ ratio of variances
 _Aquí tenemos un p>0.05 por lo que no rechazamos H0 y por lo tanto consideramos que la precisión del método A no es mayor que la del método B_.  
 
 ## Comparación de proporciones  
-Supongamo que queremos comparar las proporciones de personas con glucosa en sangre mayor a 35 mg/dl en las dos poblaciones.  
+Supongamos que queremos comparar las proporciones de personas con glucosa en sangre mayor a 35 mg/dl en las dos poblaciones.  
  - Variable: Glucosa en sangre.  
  - Factor: Grupo.  
  - Nivel: Grupo A, Grupo B.
