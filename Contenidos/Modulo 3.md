@@ -515,7 +515,7 @@ t.test(
   datos$HDL[datos$Medicamento=="A"],
   datos$HDL[datos$Medicamento=="B"],
   paired=TRUE, #pues los datos están apareados, las muestras son dependientes
-  var.equal = TRUE, #las variancias son homogéneas, las podemos considerar iguales
+  var.equal = FALSE, #las variancias no son homogéneas, no las podemos considerar iguales
   alternative="two.sided", #la alternativa es bilateral
   conf.level=0.95)
 ```
