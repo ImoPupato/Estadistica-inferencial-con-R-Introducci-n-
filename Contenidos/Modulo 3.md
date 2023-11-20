@@ -583,7 +583,7 @@ Supongamos que queremos comparar el ácido úrico promedio en personas que perte
  - Variable: Concentración de ácido úrico en sangre.  
  - Factor: Grupo.  
  - Nivel: Grupo A, Grupo B.
- - Parámetro de interés: glucosa promedio (𝜇).  
+ - Parámetro de interés:  Concentración de ácido úrico promedio (𝜇).  
  - Hipótesis de interés:
    - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable en la población A está desplazada a la derecha de la población B.
    - H0) La distribución de la variable tiene la misma localización en ambas poblaciones vs H1) La distribución de la variable en la población A está desplazada a la izquierda de la población B.
