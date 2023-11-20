@@ -74,7 +74,8 @@ Previamente al paso a paso debemos realizar el análisis del tipo de datos (apar
 	|No normal| - |Dependientes|Test de Wilcoxon| paired=FALSE|
 
    Comparación de variancias:  
-   - $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.  
+   - $s^2_1$ / $s^2_2$ = Test F de cociente de variancias.
+   
    Comparación de proporciones:   
    - $h_1$ - $h_2$ = Test de igualdad de proporciones
 6. Identificar la decisión de rechazo respecto del p-value.  
