@@ -10,7 +10,7 @@ En el módulo anterior nos propusimos comparar algunos parámetros que describí
 - Población: conjunto de todas los elementos (o eventos) de interés.
   
 Utilizaremos los siguientes ejemplos para poder identificar estos aspectos:
-_"Una empresa está pensando en cambiar de agencia proveedora de cierto rectivo. Para tomar la decisión, proponen quedarse con aquella agencia que brinde el reactivo de mayor concentración promedio (sospechan que es el proveniente de la agencia 1). Procedieron seleccionando al azar 25 alícuotas (porciones homogéneas) de reactivos de cada agencia y registraron su concentración"_  
+_"Una empresa está pensando en cambiar de agencia proveedora de cierto reactivo. Para tomar la decisión, proponen quedarse con aquella agencia que brinde el reactivo de mayor concentración promedio (sospechan que es el proveniente de la agencia 1). Procedieron seleccionando al azar 25 alícuotas (porciones homogéneas) de reactivos de cada agencia y registraron su concentración"_  
  - Variable: Concentración de cierto reactivo.  
  - Factor: Agencia proveedora.  
  - Nivel: Agencia 1, Agencia 2.
