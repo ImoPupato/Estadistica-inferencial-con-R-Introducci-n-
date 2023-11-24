@@ -9,18 +9,22 @@ Supongamos que queremos comparar el efecto de dos fertilizantes en la altura de 
 - Factor: Fertilizante
 - Niveles: Control (sin fertilizante), Fertilizante A y Fertilizante B
 
-|Número de planta| Tratamiento | Altura (cm) |
-|:-:|:-:|:-:|
-|1| Control| 15.8 |
-|2| Control| 13.6 |
-|3| Control| 14.7 |
-|...| Control|...|
-|10| Control| 15.9 |
-|1| Fertilizante A| 17.8 |
-|...| Fertilizante A|...|
-|10| Fertilizante A| 12.8 |
-|1| Fertilizante B| 1.8 |
-|...| Fertilizante B| ...|
-|10| Fertilizante B| 16.8 |
+<div align= "center">
+  |Número de planta| Tratamiento | Altura (cm) |
+  |:-:|:-:|:-:|
+  |1| Control| 15.8 |
+  |2| Control| 13.6 |
+  |3| Control| 14.7 |
+  |...| Control|...|
+  |10| Control| 15.9 |
+  |1| Fertilizante A| 17.8 |
+  |...| Fertilizante A|...|
+  |10| Fertilizante A| 12.8 |
+  |1| Fertilizante B| 1.8 |
+  |...| Fertilizante B| ...|
+  |10| Fertilizante B| 16.8 |
+</div> 
+
+  
 
 Cuando descomponemos la variabilidad, de acuerdo a nuestro diseño, vamos a tener una variabilidad en función del nivel del factor
