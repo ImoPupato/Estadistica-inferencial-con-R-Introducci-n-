@@ -248,7 +248,7 @@ attr(,"class")
 _Ambos fertilizantes tienen un afecto sobre la altura de las plantas, respecto del control. En ambos casos las alturas promedio son mayores a las del control y diferentes entre sí. El fertilizante A produce plantas de mayor altura_.
 
 ## Muestras independientes sin distribución normal y/o sin homocedasticidad
-Supongamos ahora que encontraron unos resultados del uso de un tercer fertilizante que habían ensayado para el primer ejemplo. Deciden analizar los datos de nuevo incorporando los que pensaban perdidos.
+Supongamos ahora que encontraron unos resultados del uso de un tercer fertilizante que habían ensayado para el primer ejemplo. Deciden analizar los datos de nuevo incorporando los que pensaban perdidos.  
 ### Ensayo de hipótesis
 - Ingreso de datos (se encuentran en la tabla anexa):
 ```R
