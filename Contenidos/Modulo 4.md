@@ -81,10 +81,13 @@ En el módulo anterior ya presentamos el test F de variancias para dos muestras,
 ### Comparaciones múltiples
 Cuando rechacemos la H0 y concluyamos que al menos un nivel del factor tiene efecto, va a ser de nuestro interés determinar cuál o cuales. Para ello procedemos a realizar un test de comparaciones múltiples que que nos permitirá visualizar cuál o cuáles promedios son diferentes.  
 
-A continuación realizaremos los test de ANOVA para diferentes situaciones.  
-
+A continuación realizaremos los test de ANOVA para diferentes situaciones. Primero recordemos setear el directorio de trabajo:  
+```R
+setwd("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4")
+```
 ## Muestras independientes con distribución normal y variancias homogéneas
 El enunciado fue planteado anteriormente y del análisis del diseño surge que los datos son independientes.  
+### Ensayo de hipótesis
 - Ingreso de datos (se encuentran en la tabla anexa):
 ```R
 datos <- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos.txt", sep="")
@@ -121,7 +124,7 @@ bartlett.test(list(
 data:  list(datos$Altura[datos$Tratamiento == "Control"], datos$Altura[datos$Tratamiento == "Fertilizante_A"], datos$Altura[datos$Tratamiento == "Fertilizante_B"])
 Bartlett's K-squared = 1.9187, df = 2, p-value = 0.3831
 ```
-_Consideramos hocedasticidad_
+_Consideramos homocedasticidad_
 - Test ANOVA:
 ```
 summary(aov(Altura~Tratamiento,datos))
@@ -146,39 +149,42 @@ $statistics
 $parameters
         test p.ajusted      name.t ntr alpha
   Fisher-LSD      none Tratamiento   3  0.05
-
 $means
                Altura       std r      LCL      UCL  Min  Max    Q25   Q50    Q75
 Control        15.275 0.4031129 4 14.71514 15.83486 14.7 15.6 15.150 15.40 15.525
 Fertilizante_A 17.150 0.3000000 4 16.59014 17.70986 16.9 17.5 16.900 17.10 17.350
 Fertilizante_B 16.825 0.6946222 4 16.26514 17.38486 16.2 17.8 16.425 16.65 17.050
-
 $comparison
 NULL
-
 $groups
                Altura groups
 Fertilizante_A 17.150      a
 Fertilizante_B 16.825      a
 Control        15.275      b
-
 attr(,"class")
 [1] "group"
 ```
 _Ambos fertilizantes tienen un afecto sobre la altura de las plantas, respecto del control. En ambos casos las alturas promedio son mayores a las del control_.
 
 ## Muestras dependientes con distribución normal y variancias homogéneas
-Supongamos ahora que quisimos observar a lo largo del tiempo el efecto del fertilizante. Entonces la medición de la altura de las plantas del análisis anterior se llevó adelante en tres tiempos diferentes (a 1, 2 y 3 meses). En este caso, tendríamos tres mediciones de cada planta, por lo que tendríamos una dependencia ya que cada planta sería medida tres veces. 
+Supongamos ahora que utilizamos una mayor cantidad de plantas de tres especies diferentes. En este sentido las muestras resultan dependientes. Para llevar adelante el experimento, eligieron aleatoriamente 12 plantas (homogéneas) de tres especies diferentes y de manera aleatoria les asignamos el tratamiento (control, fertilizante A y fertilizante B). Luego realizaremos mediciones de las alturas de las plantas y las registraremos en una tabla.
+- Variable: altura de la planta.
+- Parametro de interes: altura promedio ($\mu$).
+- Factor: Fertilizante.
+- Niveles: Control (sin fertilizante), Fertilizante A y Fertilizante B.
+- Bloque: Especie. Muestras dependientes.
+### Ensayo de hipótesis
 - Ingreso de datos (se encuentran en la tabla anexa):
-```R
-datos <- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos2.txt", sep="")
-class(datos$Mes)<-"character"
+```
+datos2 <- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos2.txt", sep="")
+datos2$Especie<-factor(datos2$Especie)
 ```
 - Test de normalidad:
-```R
-lapply(split(datos$Altura,datos$Tratamiento),shapiro.test)
 ```
-```R
+lapply(split(datos2$Altura,datos2$Tratamiento),shapiro.test)
+```
+```
+$Control
 	Shapiro-Wilk normality test
 data:  X[[i]]
 W = 0.94383, p-value = 0.5492
@@ -193,54 +199,65 @@ W = 0.95977, p-value = 0.7805
 ```
 _Consideramos normalidad_
 - Test de homocedasticidad:
-```R
-bartlett.test(list(
-  datos$Altura[datos$Tratamiento=="Control"],
-  datos$Altura[datos$Tratamiento=="Fertilizante_A"],
-  datos$Altura[datos$Tratamiento=="Fertilizante_B"],
-))
-```
 ```
 	Bartlett test of homogeneity of variances
-data:  list(datos$Altura[datos$Tratamiento == "Control"], datos$Altura[datos$Tratamiento == "Fertilizante_A"], datos$Altura[datos$Tratamiento == "Fertilizante_B"])
+data:  list(datos2$Altura[datos2$Tratamiento == "Control"], datos2$Altura[datos2$Tratamiento == "Fertilizante_A"], datos2$Altura[datos2$Tratamiento == "Fertilizante_B"])
 Bartlett's K-squared = 5.4294, df = 2, p-value = 0.06622
 ```
 _Consideramos hocedasticidad_
 - Test ANOVA:
 ```
-summary(aov(Altura~Tratamiento+Error(Planta/Altura),datos)) # con el argumento +Error, adicionamos el término de la dependencia
+summary(aov(Altura~Tratamiento+Especie,datos2)) #con el argumento + Planta, adicionamos el término de la dependencia
 ```
 ```
-Error: Planta
-            Df Sum Sq Mean Sq
-Tratamiento  1  18.36   18.36
-Error: Altura:Planta
-            Df Sum Sq Mean Sq
-Tratamiento  1  99.56   99.56
-Error: Within
-            Df Sum Sq Mean Sq F value   Pr(>F)    
-Tratamiento  2  5.782  2.8912   9.045 0.000805 ***
-Residuals   31  9.909  0.3196                     
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1             
+           Df Sum Sq Mean Sq F value   Pr(>F)    
+Tratamiento  2  58.77  29.387   62.96 1.21e-11 ***
+Especie      2  60.37  30.184   64.67 8.67e-12 ***
+Residuals   31  14.47   0.467                     
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
-_Concluimos que, al menos uno de los tratamientos tiene efecto sobre la altura de las plantas a diferentes tiempos._  
+_Concluimos que, al menos uno de los tratamientos tiene efecto sobre la altura de las plantas y que hay efecto de bloqueo por especie._  
+- Test de comparaciones múltiples:
+```
+print(LSD.test(aov(Altura~Tratamiento+Especie,datos2),"Tratamiento"))
+```
+```
+$statistics
+    MSerror Df     Mean       CV  t.value       LSD
+  0.4667294 31 17.94722 3.806583 2.039513 0.5688313
+$parameters
+        test p.ajusted      name.t ntr alpha
+  Fisher-LSD      none Tratamiento   3  0.05
+$means
+                 Altura       std  r      LCL      UCL  Min  Max    Q25   Q50   Q75
+Control        16.23333 0.9393744 12 15.83111 16.63556 14.7 17.6 15.575 16.20 16.85
+Fertilizante_A 19.30000 1.9711556 12 18.89778 19.70222 16.9 22.5 17.450 19.10 21.00
+Fertilizante_B 18.30833 1.4266670 12 17.90611 18.71056 16.2 20.8 17.475 18.05 19.35
+$comparison
+NULL
+$groups
+                 Altura groups
+Fertilizante_A 19.30000      a
+Fertilizante_B 18.30833      b
+Control        16.23333      c
+
+attr(,"class")
+[1] "group"
+```
+_Ambos fertilizantes tienen un afecto sobre la altura de las plantas, respecto del control. En ambos casos las alturas promedio son mayores a las del control y diferentes entre sí. El fertilizante A produce plantas de mayor altura_.
 
 ## Muestras independientes sin distribución normal y/o sin homocedasticidad
 Supongamos ahora que encontraron unos resultados del uso de un tercer fertilizante que habían ensayado para el primer ejemplo. Deciden analizar los datos de nuevo incorporando los que pensaban perdidos.
 - Ingreso de datos (se encuentran en la tabla anexa):
 ```R
-datos <- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos3.txt", sep="")
-class(datos$Mes)<-"character"
+datos3 <- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos3.txt", sep="")
 ```
 - Test de normalidad:
 ```R
-lapply(split(datos$Altura,datos$Tratamiento),shapiro.test)
+lapply(split(datos3$Altura,datos3$Tratamiento),shapiro.test)
 ```
 ```R
-lapply(split(datos$Altura,datos$Tratamiento),shapiro.test)
 $Control
 	Shapiro-Wilk normality test
 data:  X[[i]]
@@ -262,40 +279,59 @@ _Consideramos normalidad_
 - Test de homocedasticidad:
 ```R
 bartlett.test(list(
-  datos$Altura[datos$Tratamiento=="Control"],
-  datos$Altura[datos$Tratamiento=="Fertilizante_A"],
-  datos$Altura[datos$Tratamiento=="Fertilizante_B"],
-  datos$Altura[datos$Tratamiento=="Fertilizante_C"]
+  datos3$Altura[datos3$Tratamiento=="Control"],
+  datos3$Altura[datos3$Tratamiento=="Fertilizante_A"],
+  datos3$Altura[datos3$Tratamiento=="Fertilizante_B"],
+  datos3$Altura[datos3$Tratamiento=="Fertilizante_C"]
 ))
 ```
 ```
 	Bartlett test of homogeneity of variances
-data:  list(datos$Altura[datos$Tratamiento == "Control"], datos$Altura[datos$Tratamiento == "Fertilizante_A"], datos$Altura[datos$Tratamiento == "Fertilizante_B"], datos$Altura[datos$Tratamiento == "Fertilizante_C"])
+data:  list(datos3$Altura[datos3$Tratamiento == "Control"], datos3$Altura[datos3$Tratamiento == "Fertilizante_A"], datos3$Altura[datos$Tratamiento == "Fertilizante_B"], datos3$Altura[datos3$Tratamiento == "Fertilizante_C"])
 Bartlett's K-squared = 29.823, df = 3, p-value = 1.504e-06
 ```
 _No podemos considerar hocedasticidad_
 - Test ANOVA:
 En vista de que no se cumple el supuesto de homocedasticidad, utilizaremos un test no paramétrico.
 ```
-kruskal.test(Altura~Tratamiento,datos)
+kruskal.test(Altura~Tratamiento,datos3)
 ```
 ```
 	Kruskal-Wallis rank sum test
 data:  Altura by Tratamiento
 Kruskal-Wallis chi-squared = 12.725, df = 3, p-value = 0.005272
 ```
-_Concluimos que, al menos uno de los tratamientos tiene efecto sobre la altura de las plantas a diferentes tiempos._
+_Concluimos que, al menos uno de los tratamientos tiene efecto sobre la altura de las plantas._
+- Test de comparaciones múltiples:
+```
+install.packages("pgirmess")
+library("pgirmess")
+kruskalmc(datos3$Altura,datos3$Tratamiento,paired=FALSE)
+```
+```
+Multiple comparison test after Kruskal-Wallis 
+alpha: 0.05 
+Comparisons
+                              obs.dif critical.dif stat.signif
+Control-Fertilizante_A              6     8.881697       FALSE
+Control-Fertilizante_B              6     8.881697       FALSE
+Control-Fertilizante_C             12     8.881697        TRUE
+Fertilizante_A-Fertilizante_B       0     8.881697       FALSE
+Fertilizante_A-Fertilizante_C       6     8.881697       FALSE
+Fertilizante_B-Fertilizante_C       6     8.881697       FALSE
+```
+_El ferilizante C tiene un efecto respecto del control_.
 
 ## Muestras dependientes sin distribución normal y/o sin homocedasticidad
-Supongamos ahora que, entre los resultados que encontraron, estaba el seguimiento del Fertilizante C en el tiempo.
+Supongamos ahora que, en el ejemplo anterior, incorportamos a las especies como bloque.
 - Ingreso de datos (se encuentran en la tabla anexa):
 ```R
-datos <- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos4.txt", sep="")
-class(datos$Mes)<-"character"
+datos4<- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos4.txt", sep="")
+datos4$Especie<-factor(datos4$Especie)
 ```
 - Test de normalidad:
 ```R
-lapply(split(datos$Altura,datos$Tratamiento),shapiro.test)
+lapply(split(datos4$Altura,datos4$Tratamiento),shapiro.test)
 ```
 ```R
 $Control
@@ -327,18 +363,39 @@ bartlett.test(list(
 ```
 ```
 	Bartlett test of homogeneity of variances
-data:  list(datos$Altura[datos$Tratamiento == "Control"], datos$Altura[datos$Tratamiento == "Fertilizante_A"], datos$Altura[datos$Tratamiento == "Fertilizante_B"], datos$Altura[datos$Tratamiento == "Fertilizante_C"])
+data:  list(datos4$Altura[datos4 $Tratamiento == "Control"], datos4$Altura[datos4$Tratamiento == "Fertilizante_A"], datos4$Altura[datos4$Tratamiento == "Fertilizante_B"], datos4$Altura[datos4$Tratamiento == "Fertilizante_C"])
 Bartlett's K-squared = 86.831, df = 3, p-value < 2.2e-16
 ```
 _No podemos considerar hocedasticidad_
 - Test ANOVA:
 En vista de que no se cumple el supuesto de homocedasticidad, utilizaremos un test no paramétrico para muestras dependientes.
 ```
-kruskal.test(Altura~Tratamiento,datos)
+kruskal.test(Altura~Tratamiento+Especie,datos4)
 ```
 ```
 	Kruskal-Wallis rank sum test
 data:  Altura by Tratamiento
 Kruskal-Wallis chi-squared = 12.725, df = 3, p-value = 0.005272
 ```
-_Concluimos que, al menos uno de los tratamientos tiene efecto sobre la altura de las plantas a diferentes tiempos._
+_Concluimos que, al menos uno de los tratamientos tiene efecto sobre la altura de las plantas._
+- Test de comparaciones múltiples:
+```
+pairwise.wilcox.test(x = datos4$Altura,  #variable respuesta
+                g = datos4$Tratamiento, #factor
+                p.adjust.method = "holm", #método
+                paired = TRUE, #muestras aparedadas, dependientes
+                alternative = "two.sided") #alterntiva bilateral
+```
+```
+Pairwise comparisons using Wilcoxon signed rank test with continuity correction 
+
+data:  datos4$Altura and datos4$Tratamiento 
+
+               Control Fertilizante_A Fertilizante_B
+Fertilizante_A 0.0050  -              -             
+Fertilizante_B 0.0029  0.0253         -             
+Fertilizante_C 0.0029  0.0029         0.0029        
+
+P value adjustment method: holm 
+```
+_Los tres fertilizantes tienen un afecto sobre la altura de las plantas, respecto del control, siendo también diferentes entre sí_.
