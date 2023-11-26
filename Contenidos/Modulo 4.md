@@ -139,6 +139,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 _Concluimos que, al menos uno de los tratamientos tiene efecto sobre la altura de las plantas._
 - Test de comparaciones múltiples:
 ```
+install.packages("agricolae")
+library("agricolae")
 print(LSD.test(aov(Altura~Tratamiento,datos),"Tratamiento"))
 ```
 ```
