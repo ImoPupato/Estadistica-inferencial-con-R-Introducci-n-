@@ -249,6 +249,7 @@ _Ambos fertilizantes tienen un afecto sobre la altura de las plantas, respecto d
 
 ## Muestras independientes sin distribución normal y/o sin homocedasticidad
 Supongamos ahora que encontraron unos resultados del uso de un tercer fertilizante que habían ensayado para el primer ejemplo. Deciden analizar los datos de nuevo incorporando los que pensaban perdidos.
+### Ensayo de hipótesis
 - Ingreso de datos (se encuentran en la tabla anexa):
 ```R
 datos3 <- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos3.txt", sep="")
@@ -324,6 +325,7 @@ _El ferilizante C tiene un efecto respecto del control_.
 
 ## Muestras dependientes sin distribución normal y/o sin homocedasticidad
 Supongamos ahora que, en el ejemplo anterior, incorportamos a las especies como bloque.
+### Ensayo de hipótesis
 - Ingreso de datos (se encuentran en la tabla anexa):
 ```R
 datos4<- read.csv("C:/Users/Aylen/Desktop/Curso R (IPS)/Análisis estadístico básico con R/Contenidos/Modulo 4/datos4.txt", sep="")
@@ -366,7 +368,7 @@ bartlett.test(list(
 data:  list(datos4$Altura[datos4 $Tratamiento == "Control"], datos4$Altura[datos4$Tratamiento == "Fertilizante_A"], datos4$Altura[datos4$Tratamiento == "Fertilizante_B"], datos4$Altura[datos4$Tratamiento == "Fertilizante_C"])
 Bartlett's K-squared = 86.831, df = 3, p-value < 2.2e-16
 ```
-_No podemos considerar hocedasticidad_
+_No podemos considerar homocedasticidad_
 - Test ANOVA:
 En vista de que no se cumple el supuesto de homocedasticidad, utilizaremos un test no paramétrico para muestras dependientes.
 ```
